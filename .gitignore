@@ -1,6 +1,8 @@
 # Configuration Files
 *config.py
 
+*.suo
+
 # -- AUTO GENERATED PYTHON IGNORES FROM GITHUB -- 
 # Byte-compiled / optimized / DLL files
 __pycache__/
