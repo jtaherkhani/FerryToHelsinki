@@ -2,11 +2,15 @@ import socket
 import sys
 import re
 
+from message import message
 from errorhandling import print_message
-
 
 class irc(object):
     """handles communication between twitch and the ferry bot"""
+    
+    #twitch irc rules
+    max_line_length_twitch = 44 #reduced as mods get an icon
+    end_line_character = "-"
 
     def __init__(self, config):
         self.add_configuration(config)
@@ -20,9 +24,10 @@ class irc(object):
         self.channel = config['account']['channel']
         self.botName = config['bot']['name']
         self.timeout = config['bot']['timeout']
+        self.maxFirstLineLength = self.max_line_length_twitch - len(self.botName + ": ")
 
     def connect_socket(self, retryCount):
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #typically used, needs more investigation
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #tcp/ip configuration
         sock.settimeout(self.timeout)
 
         try:
@@ -86,10 +91,26 @@ class irc(object):
         if self.check_has_message(messageData):
             return [self.parse_message(line) for line in filter(None, messageData.split('\r\n'))]
 
-    def send_message(self, message):
-        print_message("INFO", ("Message sent : %s" % message))
-        self.sock.send(("PRIVMSG #%s :%s\n" % (self.channel, message)).encode())
-
     def ping(self, messageData):
         if messageData.startswith('PING'):
             self.sock.send(messageData.replace('PING', 'PONG').encode())
+
+    def send_message(self, messages):
+        for currMessage in messages:
+            formattedMessage = self.format_title(currMessage[message.title_key]) + currMessage[message.message_body_key]
+            print_message("INFO", ("Message sent : %s" % formattedMessage))
+            sent = self.sock.send(("PRIVMSG #%s :%s\n" % (self.channel, formattedMessage)).encode())
+
+    def format_title(self, title):
+        return title + self.get_characters_to_add(title, True)
+
+    def get_characters_to_add(self, messageLine, isFirstLine):
+        lineCharacters = len(messageLine)
+        maxLineCharacters = self.maxFirstLineLength if isFirstLine else self.max_line_length_twitch
+
+        if lineCharacters >= maxLineCharacters:
+            return self.get_whitespace_to_add(messageLine[maxLineCharacters:], False)
+
+        return (self.end_line_character * (maxLineCharacters - lineCharacters))
+
+

@@ -21,7 +21,10 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="actionsenum.py">
+    <Compile Include="action.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="actionmanager.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="config.py">
@@ -34,6 +37,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="irc.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="message.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="startup.py">
