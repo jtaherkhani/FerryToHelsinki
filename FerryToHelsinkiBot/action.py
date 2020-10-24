@@ -1,6 +1,6 @@
-from message import message
+from message import Message
 
-class action(object):
+class Action(object):
     """Handles actions taken by the ferry to helsinki bot"""
 
     #Action message keys
@@ -23,8 +23,8 @@ class action(object):
     }
      
     #Action message description mapping
-    action_descriptions = {
-        command_key : "lists available commands (/short !com)"   
+    action_synonymns = {
+        command_key : [command_short_key]
     }
      
     #Action run parametersion_key
@@ -47,16 +47,16 @@ class action(object):
         }
 
     def create_list_messages(self):
-        listMessages = [message("List of commands").create_message()]
-        listMessages.extend(self.create_action_list_messages())
-
-        return listMessages
+        return [Message("List of commands", self.create_action_list_message_body())]
      
-    def create_action_list_messages(self):
-        action_list = []
-         
+    def create_action_list_message_body(self):
+        messageBody = ""
         for actionMessage in self.action_key_set:
-            if actionMessage in self.action_descriptions:
-                action_list.append(message(actionMessage, self.action_descriptions.get(actionMessage)).create_message())
-     
-        return action_list
+            if actionMessage in self.action_synonymns:
+                messageBody += " " + actionMessage
+                for synonymn in self.action_synonymns.get(actionMessage):
+                    messageBody += "...(%s) " % (synonymn) #account for when we don't have any synonymns
+
+                messageBody += "\n"
+         
+        return messageBody

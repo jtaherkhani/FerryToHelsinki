@@ -1,8 +1,8 @@
-from action import action
-from irc import irc
+from action import Action
+from irc import Irc
 from errorhandling import print_message
 
-class actionmanager(object):
+class ActionManager(object):
     """Manages actions the bot can take"""
     
     def __init__(self, irc):
@@ -10,7 +10,7 @@ class actionmanager(object):
 
 
     def run(self, actionKey):
-        currAction = action(actionKey)
+        currAction = Action(actionKey)
 
         if currAction.needs_webhook in currAction.actionRulesDictionary:
             print_message('INFO', 'NEXT TO BUILD')
@@ -19,11 +19,11 @@ class actionmanager(object):
             self.irc.send_message(currAction.actionRulesDictionary.get(currAction.message_contents))
 
     def should_send_message(self, currAction):
-        return action.send_message in currAction.actionRulesDictionary and currAction.actionRulesDictionary.get(action.send_message) == True
+        return Action.send_message in currAction.actionRulesDictionary and currAction.actionRulesDictionary.get(Action.send_message) == True
 
     @staticmethod
     def is_action_key_recognized(actionKey):
-        return actionKey in action.action_key_set
+        return actionKey in Action.action_key_set
 
 
 

@@ -1,0 +1,15 @@
+﻿@page "/messageentry"
+
+<h3>MessageEntry</h3>
+
+<EditForm Model="@Message" OnValidSubmit="@HandleValidSubmit">
+    <label>
+        User Name:
+        <InputText @bind-Value="@Message.UserName"/>
+    </label>
+    <label>
+        Message Contents:
+        <InputTextArea @bind-Value="@Message.MessageContents" />
+    </label>
+    <button type="submit">Submit</button>
+</EditForm>
