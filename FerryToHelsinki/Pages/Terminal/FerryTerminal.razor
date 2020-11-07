@@ -1,0 +1,23 @@
+﻿@layout FerryToHelsinki.Shared.Layouts.Terminal
+@page "/ferryterminal"
+
+<div id="crt-tv">
+    <div id="screen">
+        <div id="window">
+            @if (@CurrentTerminalState == Enums.TerminalStates.Opened)
+            {
+                <OpenedTerminal/>
+            }
+            else if (@CurrentTerminalState == Enums.TerminalStates.FerryToHelsinkiStart)
+            {
+                <pre id="ferry-title">@Title</pre>
+                <div id="ferry-title-secondary">
+                    <pre id="ferry-image" />
+                    <pre id="ferry-subtitle">@SubTitle</pre>
+                    <pre id="ferry-image-inverted" />
+                </div>
+            }
+            <div id="scanline" />
+        </div>
+    </div>
+</div>

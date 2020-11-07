@@ -7,7 +7,7 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "FerryToHelsinkiBot", "Ferry
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FerryToHelsinkiWebsite.Data", "..\FerryToHelsinkiWebsite.Data\FerryToHelsinkiWebsite.Data.csproj", "{F883A26E-2C97-4649-B3F2-F0425883490F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FerryToHelsinki", "..\FerryToHelsinki\FerryToHelsinki.csproj", "{FC443921-1918-4D73-9AD1-3717FA2A50CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FerryToHelsinki", "..\FerryToHelsinki\FerryToHelsinki.csproj", "{FC443921-1918-4D73-9AD1-3717FA2A50CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

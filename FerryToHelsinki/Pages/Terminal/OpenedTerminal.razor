@@ -1,0 +1,13 @@
+﻿<div id="terminal-opened">
+    <pre id="terminal-initializing" class="terminal-values" />
+    <pre id="terminal-subtitle" class="terminal-values" />
+    <pre id="terminal-initialized" class="terminal-values" />
+    <pre id="terminal-welcome" class="terminal-values" />
+    @if (IsRendered)
+    {
+        <TerminalMessage OnMessageFound="@ReadNewMessage" MessagePromptPrefix="@MessagePrefix" />
+    }
+</div>
+
+
+

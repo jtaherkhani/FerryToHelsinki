@@ -16,7 +16,7 @@ namespace FerryToHelsinki.Pages
         [Inject]
         private MessageRepository MessageRepository { get; set; }
 
-        private List<Message> Messages { get; set; }
+        private List<Message> Messages { get; set; } = new List<Message>();
 
         private HubConnection hubConnection;
 
@@ -26,7 +26,7 @@ namespace FerryToHelsinki.Pages
                 .WithUrl(NavigationManager.ToAbsoluteUri("/messagehub"))
                 .Build();
 
-            hubConnection.On<string, string, string>("SendMessage", (title, user, messageContents) =>
+            hubConnection.On<string, string>("SendMessage", (user, messageContents) =>
             {
                 Messages.Add(new Message
                 {
