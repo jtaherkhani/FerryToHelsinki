@@ -5,7 +5,7 @@
     <pre id="terminal-welcome" class="terminal-values" />
     @if (IsRendered)
     {
-        <TerminalMessage OnMessageFound="@ReadNewMessage" MessagePromptPrefix="@MessagePrefix" />
+        <TerminalMessage OnMessageFound="@ReadNewMessage" MessageService="@MessageService"/>
     }
 </div>
 

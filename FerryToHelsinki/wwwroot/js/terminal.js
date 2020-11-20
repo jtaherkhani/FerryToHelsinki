@@ -6,9 +6,12 @@
         return true; // denotes when the terminal has rendered everything required
     },
     animateMessage: async function (messageContents) {
-        setTimeout(async () => {
-            await this.animateTextAsync(messageContents, "message", 200);
-        }, 1500);
+        await this.animateTextAsync(messageContents, "message", 200);
+        return true;
+    },
+    animateResponse: async function (responseContents, messagePrefix) {
+        await this.animateTextAsync('\n' + responseContents, "message", 1);
+        await this.animateTextAsync('\n' + messagePrefix, "message", 1);
     },
     animateTextAsync: function (messageContents, elementId, typingSpeed) {
         if (!messageContents) {

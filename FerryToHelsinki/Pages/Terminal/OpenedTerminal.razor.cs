@@ -1,4 +1,6 @@
-﻿using FerryToHelsinkiWebsite.Data.Constants;
+﻿using FerryToHelsinki.Filing;
+using FerryToHelsinki.Services;
+using FerryToHelsinkiWebsite.Data.Constants;
 using FerryToHelsinkiWebsite.Data.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
@@ -13,7 +15,7 @@ namespace FerryToHelsinki.Pages.Terminal
         [Inject]
         private IJSRuntime JsRuntime { get; set; }
 
-        protected string MessagePrefix = "C:/Brain/Games";
+        protected MessageService MessageService { get; set; }
 
         private bool IsRendered;
 
@@ -21,6 +23,7 @@ namespace FerryToHelsinki.Pages.Terminal
         {
             if (firstRender)
             {
+                MessageService = new MessageService(new FileSystem(), JsRuntime);
                 IsRendered = await JsRuntime.InvokeAsync<bool>("terminalFunctions.animateTerminalOpened", TitleContents);
                 await InvokeAsync(StateHasChanged);
             }

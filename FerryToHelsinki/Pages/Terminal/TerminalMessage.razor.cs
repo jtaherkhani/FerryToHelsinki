@@ -1,4 +1,6 @@
-﻿using FerryToHelsinkiWebsite.Data.Models;
+﻿using FerryToHelsinki.Enums;
+using FerryToHelsinki.Services;
+using FerryToHelsinkiWebsite.Data.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.JSInterop;
@@ -12,7 +14,7 @@ namespace FerryToHelsinki.Pages.Terminal
         public EventCallback<Message> OnMessageFound { get; set; }
 
         [Parameter]
-        public string MessagePromptPrefix { get; set; } = "";
+        public MessageService MessageService { get; set; }
 
         [Inject]
         private IJSRuntime JsRuntime { get; set; }
@@ -34,13 +36,17 @@ namespace FerryToHelsinki.Pages.Terminal
 
         private async Task OnMessageReceived(string user, string messageContents)
         {
-            await OnMessageFound.InvokeAsync(new Message
+            var message = new Message
             {
                 UserName = user,
                 MessageContents = messageContents
-            });
+            };
 
-            await JsRuntime.InvokeVoidAsync("terminalFunctions.animateMessage", messageContents);
+            await OnMessageFound.InvokeAsync(message);
+            if (await JsRuntime.InvokeAsync<bool>("terminalFunctions.animateMessage", messageContents))
+            {
+                await MessageService.HandleMessageAsync(message);
+            }
         }
     }
 }
