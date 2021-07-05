@@ -18,10 +18,12 @@ Initial Setup:
 
 `
   "twitch_config":
+  
      'irc': {
         'server': 'irc.twitch.tv',
         'port': 6667
      },
+     
      'account': {
         'username': 'YOUR_TWITCH_USERNAME',
         'password': 'TWITCH_OAUTH' (http://twitchapps.com/tmi),
