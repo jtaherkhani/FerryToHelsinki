@@ -11,9 +11,11 @@ Twitch Setup:
 
 Initial Setup:
   1) In the FerryToHelsinki solution create an appsettings.json file at the root and add the following configuration:
-     "ConnectionStrings": {
-         "FerryToHelsinkiContext:" "YOUR_CONNECTION_STRING"
-     }
+```
+"ConnectionStrings": {
+   "FerryToHelsinkiContext:" "YOUR_CONNECTION_STRING"
+}
+```
   2) In the FerryToHelsinkiBot solution create a config.py file at the root and add the following configuration that the system expects. 
 
 ```
