@@ -17,6 +17,7 @@ Initial Setup:
   2) In the FerryToHelsinkiBot solution create a config.py file at the root and add the following configuration that the system expects. 
 
 `
+
 "twitch_config":
      'irc': {
         'server': 'irc.twitch.tv',
