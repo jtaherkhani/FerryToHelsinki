@@ -14,7 +14,7 @@ Initial Setup:
      "ConnectionStrings": {
          "FerryToHelsinkiContext:" "YOUR_CONNECTION_STRING"
      }
-  2) In the FerryToHelsinkiBot solution create a config.py file at the root and add the following configuration:
+  2) In the FerryToHelsinkiBot solution create a config.py file at the root and add the following configuration into a new python class called "twitch_config":
      'irc': {
         'server': 'irc.twitch.tv',
         'port': 6667
