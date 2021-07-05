@@ -16,25 +16,22 @@ Initial Setup:
      }
   2) In the FerryToHelsinkiBot solution create a config.py file at the root and add the following configuration that the system expects. 
 
-`
-    "twitch_config":
-  
-       'irc': {
-          'server': 'irc.twitch.tv',
-          'port': 6667
-       },
-
-       'account': {
-          'username': 'YOUR_TWITCH_USERNAME',
-          'password': 'TWITCH_OAUTH' (http://twitchapps.com/tmi),
-          'channel': 'TWITCH_CHANNEL'
-       },
-
-       'bot': {
-          'name': 'YOUR_BOT_NAME',
-          'reminder': 'SECONDS_BEFORE_BOT_SENDS_REMINDER_TEXT' (150)
-          'timeout': 'TIMEOUT_OF_MESSAGES_IN_SECONDS' (5)
-       }
- `
+```
+"twitch_config":
+   'irc': {
+      'server': 'irc.twitch.tv',
+      'port': 6667
+   },
+   'account': {
+      'username': 'YOUR_TWITCH_USERNAME',
+      'password': 'TWITCH_OAUTH' (http://twitchapps.com/tmi),
+      'channel': 'TWITCH_CHANNEL'
+   },
+   'bot': {
+      'name': 'YOUR_BOT_NAME',
+      'reminder': 'SECONDS_BEFORE_BOT_SENDS_REMINDER_TEXT' (150)
+      'timeout': 'TIMEOUT_OF_MESSAGES_IN_SECONDS' (5)
+   }
+```
     
  At this point you should be able to run your branch locally and see output!
