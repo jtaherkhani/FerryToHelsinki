@@ -4,6 +4,7 @@ using FerryToHelsinki.Enums;
 using FerryToHelsinki.Filing;
 using FerryToHelsinkiWebsite.Data.Models;
 using Microsoft.JSInterop;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace FerryToHelsinki.Services
     {
         private Dictionary<string, Command> _eligibleCommands;
         private Command _undefinedCommand;
+        public TerminalStates CurrentTerminalState {get; set;}
         public string MessagePrompt { get; }
 
         /*
@@ -29,6 +31,8 @@ namespace FerryToHelsinki.Services
         public MessageService(FileSystem fileSystem, IJSRuntime jSRuntime)
         {
             MessagePrompt = fileSystem.GetCurrentDirectoryPath() + MessageConstants.MessagePrompt;
+
+            CurrentTerminalState = TerminalStates.Opened;
             _eligibleCommands = Command.CreateCommandsDictionaryTerminalOpened(fileSystem, jSRuntime);
             _undefinedCommand = new CommandUndefined(jSRuntime, TerminalStates.Opened, MessagePrompt);
         }
@@ -40,6 +44,12 @@ namespace FerryToHelsinki.Services
             if (_eligibleCommands.TryGetValue(messageKey, out var commandToExecute))
             {
                 await commandToExecute.ExecuteAsync(messageValue);
+
+                if (commandToExecute is IChangeTerminalStatesCommand terminalStatesCommand
+                    && terminalStatesCommand.HasUpdatedTerminalState())
+                {
+                    CurrentTerminalState = ChangeTerminalState();
+                }
             }
             else
             {
@@ -54,5 +64,14 @@ namespace FerryToHelsinki.Services
             return (messageKey: wordsInMessage.First(), messageValue: wordsInMessage.Skip(1).FirstOrDefault());
 
         }
+
+        private TerminalStates ChangeTerminalState() =>
+            CurrentTerminalState switch
+            {
+                TerminalStates.Opened => TerminalStates.FerryToHelsinkiStart,
+                TerminalStates.FerryToHelsinkiStart => TerminalStates.FerryToHelsinkiGameplay,
+                _ => throw new ArgumentOutOfRangeException("Unexpected enum value")
+            };
+
     }
 }

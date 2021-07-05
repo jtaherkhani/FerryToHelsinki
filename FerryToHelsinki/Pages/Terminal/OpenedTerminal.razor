@@ -5,7 +5,7 @@
     <pre id="terminal-welcome" class="terminal-values" />
     @if (IsRendered)
     {
-        <TerminalMessage OnMessageFound="@ReadNewMessage" MessageService="@MessageService"/>
+        <TerminalMessage CurrentTerminalState="Enums.TerminalStates.Opened" OnTerminalStateChanged="@UpdateTerminalState" MessageService="@MessageService"/>
     }
 </div>
 

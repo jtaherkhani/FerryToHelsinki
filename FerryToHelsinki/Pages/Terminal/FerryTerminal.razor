@@ -6,16 +6,12 @@
         <div id="window">
             @if (@CurrentTerminalState == Enums.TerminalStates.Opened)
             {
-                <OpenedTerminal/>
+                <OpenedTerminal OnTerminalStateChanged="@UpdateTerminalState" />
             }
             else if (@CurrentTerminalState == Enums.TerminalStates.FerryToHelsinkiStart)
             {
-                <pre id="ferry-title">@Title</pre>
-                <div id="ferry-title-secondary">
-                    <pre id="ferry-image" />
-                    <pre id="ferry-subtitle">@SubTitle</pre>
-                    <pre id="ferry-image-inverted" />
-                </div>
+                //<FerryStarted OnTerminalStateChanged="@UpdateTerminalState"/>
+                <pre id="ferry-title">"Titular Title"</pre>
             }
             <div id="scanline" />
         </div>

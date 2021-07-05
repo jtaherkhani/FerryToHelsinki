@@ -1,5 +1,7 @@
-﻿using System;
+﻿using FerryToHelsinki.Constants;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace FerryToHelsinki.Filing
@@ -23,8 +25,8 @@ namespace FerryToHelsinki.Filing
             _brainDirectory = new Directory(_rootDirectory, "Brain");
             _coronaDirectory = new Directory(_brainDirectory, "Corona");
             _gameDirectory = new Directory(_coronaDirectory, "Games", new List<File>
-            {
-                new File("FerryToHelsinki", "exe")
+            { 
+                new File(FerryConstants.FerryFileName, FileExtension.exe)
             });
         }
 
@@ -57,6 +59,20 @@ namespace FerryToHelsinki.Filing
             {
                 return TryParsePathAndNavigateToDirectory(directoryPath);
             }
+        }
+
+        public FileExecuteResult ExecuteFile(string fileName)
+        {
+            var fileNameParsed = Path.GetFileNameWithoutExtension(fileName);
+
+            var childFile = _currentDirectory.FindChildFile(fileNameParsed);
+
+            if (childFile == null)
+            {
+                return FileExecuteResult.NewExecuteFailue("Unable to locate file with this name");
+            }
+
+            return childFile.ExecuteFile();
         }
 
         private bool TryNavigateToParentDirectory()

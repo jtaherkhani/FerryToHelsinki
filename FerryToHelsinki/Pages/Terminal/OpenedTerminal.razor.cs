@@ -1,17 +1,18 @@
-﻿using FerryToHelsinki.Filing;
+﻿using FerryToHelsinki.Enums;
+using FerryToHelsinki.Filing;
 using FerryToHelsinki.Services;
 using FerryToHelsinkiWebsite.Data.Constants;
-using FerryToHelsinkiWebsite.Data.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FerryToHelsinki.Pages.Terminal
 {
     public partial class OpenedTerminal
     {
+        [Parameter]
+        public EventCallback<TerminalStates> OnTerminalStateChanged { get; set; }
+
         [Inject]
         private IJSRuntime JsRuntime { get; set; }
 
@@ -31,12 +32,12 @@ namespace FerryToHelsinki.Pages.Terminal
             await base.OnAfterRenderAsync(firstRender);
         }
 
-        private void ReadNewMessage(Message newMessage)
+        private async Task UpdateTerminalState(TerminalStates currentTerminalState)
         {
-            Console.WriteLine(newMessage.MessageContents);
+             await OnTerminalStateChanged.InvokeAsync(currentTerminalState);
         }
 
-        private string[][] TitleContents = new string[][]
+        private readonly string[][] TitleContents = new string[][]
         {
             new string[] { AsciiArt.TerminalInitializing, "terminal-initializing" },
             new string[] { AsciiArt.JoshTerminal, "terminal-subtitle"},

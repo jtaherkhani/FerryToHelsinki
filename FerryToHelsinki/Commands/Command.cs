@@ -45,7 +45,8 @@ namespace FerryToHelsinki.Commands
                 new CommandFileSystemList(fileSystem, jSRuntime),
                 new CommandFileSystemHelp(fileSystem, jSRuntime),
                 new CommandFileSystemChangeDirectory(fileSystem, jSRuntime),
-                new CommandFileSystemPresentWorkingDirectory(fileSystem, jSRuntime)
+                new CommandFileSystemPresentWorkingDirectory(fileSystem, jSRuntime),
+                new CommandFileSystemExecuteFile(fileSystem, jSRuntime)
             };
     }
 }

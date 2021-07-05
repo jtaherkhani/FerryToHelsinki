@@ -11,10 +11,13 @@ namespace FerryToHelsinki.Pages.Terminal
     public partial class TerminalMessage
     {
         [Parameter]
-        public EventCallback<Message> OnMessageFound { get; set; }
+        public EventCallback<TerminalStates> OnTerminalStateChanged { get; set; }
 
         [Parameter]
         public MessageService MessageService { get; set; }
+
+        [Parameter] 
+        public TerminalStates CurrentTerminalState { get; set; }
 
         [Inject]
         private IJSRuntime JsRuntime { get; set; }
@@ -42,10 +45,14 @@ namespace FerryToHelsinki.Pages.Terminal
                 MessageContents = messageContents
             };
 
-            await OnMessageFound.InvokeAsync(message);
             if (await JsRuntime.InvokeAsync<bool>("terminalFunctions.animateMessage", messageContents))
             {
                 await MessageService.HandleMessageAsync(message);
+
+                if (MessageService.CurrentTerminalState != CurrentTerminalState)
+                {
+                    await OnTerminalStateChanged.InvokeAsync(MessageService.CurrentTerminalState);
+                }
             }
         }
     }

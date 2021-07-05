@@ -70,7 +70,7 @@ namespace FerryToHelsinki.Filing
 
             foreach (var file in _childFiles)
             {
-                directoryContents.Add(file.FileExtension, file.FileName);
+                directoryContents.Add(file.Extension.ToString(), file.FileName);
             }
 
             return directoryContents;
@@ -78,5 +78,8 @@ namespace FerryToHelsinki.Filing
 
         public Directory FindChildDirectory(string directoryName) =>
             _childDirectories.FirstOrDefault(x => x.DirectoryName == directoryName);
+
+        public File FindChildFile(string fileName) =>
+            _childFiles.FirstOrDefault(x => x.FileName == fileName);
     }
 }
