@@ -49,3 +49,27 @@
         }, 160)
     }
 }
+
+window.ferryMainMenuFunctions = {
+    animatePressStart: function () {
+        var canvas = document.getElementById('ferry-game-selection');
+        var canvasWidth = canvas.clientWidth;
+        var canvasHeight = canvas.clientHeight;
+        var context = canvas.getContext('2d');
+
+        var pressStart = new Image();
+        pressStart.src = "img/pressstartimage.png";
+
+        pressStart.onload = function () {
+            var newWidth = pressStart.width / 30;
+            var newHeight = pressStart.height / 30;
+
+            var midCanvas = canvasWidth * 0.5;
+            var imgMidPoint = newWidth * 0.5;
+            var idealCanvasWidth = midCanvas - imgMidPoint;
+            var idealCanvasHeight = canvasHeight * 0.2;
+
+            context.drawImage(pressStart, idealCanvasWidth, idealCanvasHeight, newWidth, newHeight);
+        }
+    }
+}

@@ -20,7 +20,8 @@ namespace FerryToHelsinki.Pages.Terminal
 
             if (ShouldRenderForTerminalState)
             {
-               await JsRuntime.InvokeVoidAsync("terminalFunctions.animateFerries", FerryFrames);
+                await JsRuntime.InvokeVoidAsync("terminalFunctions.animateFerries", FerryFrames);
+                await JsRuntime.InvokeVoidAsync("ferryMainMenuFunctions.animatePressStart");
             }
 
             await base.OnAfterRenderAsync(firstRender);
