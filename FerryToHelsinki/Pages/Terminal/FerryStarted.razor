@@ -1,8 +1,29 @@
-﻿<pre id="ferry-title">@Title</pre>
-<div id="ferry-title-secondary">
-    <pre id="ferry-image" />
-    <pre id="ferry-subtitle">@SubTitle</pre>
-    <pre id="ferry-image-inverted" />
-</div>
+﻿@using FerryToHelsinki.Shared.BaseComponents;
 
-<TerminalMessage CurrentTerminalState="Enums.TerminalStates.FerryToHelsinkiStart" OnTerminalStateChanged="@UpdateTerminalState" MessageService="@MessageService" />
+@inherits TerminalStateComponent;
+
+@if (ShouldRenderForTerminalState)
+{
+    <div id="flex">
+        <div id="a">
+            <pre id="ferry-title">@Title</pre>
+        </div>
+        <div id="b">
+            <div id="ferry-title-secondary">
+                <pre id="ferry-image" />
+                <pre id="ferry-subtitle">@SubTitle</pre>
+                <pre id="ferry-image-inverted" />
+            </div>
+        </div>
+        <div id="c">
+            <TerminalMessage 
+                CurrentTerminalState="@CurrentTerminalState"
+                ExpectedTerminalState="Enums.TerminalStates.FerryToHelsinkiStart"
+                OnTerminalStateChanged="@UpdateTerminalState" 
+                MessageService="@MessageService" />
+        </div>
+    </div>
+}
+
+
+

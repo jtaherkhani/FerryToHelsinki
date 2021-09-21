@@ -106,6 +106,23 @@ body {
     }
 }
 
+#flex {
+    display: flex;
+    flex-direction: column;
+}
+
+#a {
+    order: 1;
+}
+
+#b {
+    order: 2;
+}
+
+#c {
+    order: 3;
+}
+
 #ferry-title {
     color: #0080ff;
     font-size: 1.25em;
@@ -217,8 +234,9 @@ body {
     box-sizing: border-box;
     background: #031e11; /* Background color should match the message window */
     border-left: .5em solid;
-    
 }
+
+#
 
 @-webkit-keyframes typing {
     from {

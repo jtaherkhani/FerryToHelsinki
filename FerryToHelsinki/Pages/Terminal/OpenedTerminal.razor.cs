@@ -2,24 +2,16 @@
 using FerryToHelsinki.Filing;
 using FerryToHelsinki.Services;
 using FerryToHelsinkiWebsite.Data.Constants;
-using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 using System.Threading.Tasks;
 
 namespace FerryToHelsinki.Pages.Terminal
 {
     public partial class OpenedTerminal
     {
-        [Parameter]
-        public EventCallback<TerminalStates> OnTerminalStateChanged { get; set; }
-
-        [Inject]
-        private IJSRuntime JsRuntime { get; set; }
-
         protected MessageService MessageService { get; set; }
 
         private bool IsRendered;
-
+        
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
@@ -30,11 +22,6 @@ namespace FerryToHelsinki.Pages.Terminal
             }
 
             await base.OnAfterRenderAsync(firstRender);
-        }
-
-        private async Task UpdateTerminalState(TerminalStates currentTerminalState)
-        {
-             await OnTerminalStateChanged.InvokeAsync(currentTerminalState);
         }
 
         private readonly string[][] TitleContents = new string[][]

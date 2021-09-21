@@ -1,13 +1,26 @@
-﻿<div id="terminal-opened">
-    <pre id="terminal-initializing" class="terminal-values" />
-    <pre id="terminal-subtitle" class="terminal-values" />
-    <pre id="terminal-initialized" class="terminal-values" />
-    <pre id="terminal-welcome" class="terminal-values" />
-    @if (IsRendered)
-    {
-        <TerminalMessage CurrentTerminalState="Enums.TerminalStates.Opened" OnTerminalStateChanged="@UpdateTerminalState" MessageService="@MessageService"/>
-    }
-</div>
+﻿@using FerryToHelsinki.Shared.BaseComponents;
+
+@inherits TerminalStateComponent;
+
+@if (ShouldRenderForTerminalState)
+{
+    <div id="terminal-opened">
+        <pre id="terminal-initializing" class="terminal-values" />
+        <pre id="terminal-subtitle" class="terminal-values" />
+        <pre id="terminal-initialized" class="terminal-values" />
+        <pre id="terminal-welcome" class="terminal-values" />
+        @if (IsRendered)
+        {
+            <TerminalMessage 
+                CurrentTerminalState="Enums.TerminalStates.Opened" 
+                ExpectedTerminalState="Enums.TerminalStates.Opened" 
+                OnTerminalStateChanged="@UpdateTerminalState" 
+                MessageService="@MessageService" />
+        }
+    </div>
+}
+
+
 
 
 

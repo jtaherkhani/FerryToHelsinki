@@ -11,16 +11,7 @@ namespace FerryToHelsinki.Pages.Terminal
     public partial class TerminalMessage
     {
         [Parameter]
-        public EventCallback<TerminalStates> OnTerminalStateChanged { get; set; }
-
-        [Parameter]
         public MessageService MessageService { get; set; }
-
-        [Parameter] 
-        public TerminalStates CurrentTerminalState { get; set; }
-
-        [Inject]
-        private IJSRuntime JsRuntime { get; set; }
 
         [Inject]
         private NavigationManager NavigationManager { get; set; }
@@ -51,7 +42,7 @@ namespace FerryToHelsinki.Pages.Terminal
 
                 if (MessageService.CurrentTerminalState != CurrentTerminalState)
                 {
-                    await OnTerminalStateChanged.InvokeAsync(MessageService.CurrentTerminalState);
+                    await UpdateTerminalState(MessageService.CurrentTerminalState);
                 }
             }
         }
