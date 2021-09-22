@@ -53,23 +53,53 @@
 window.ferryMainMenuFunctions = {
     animatePressStart: function () {
         var canvas = document.getElementById('ferry-game-selection');
-        var canvasWidth = canvas.clientWidth;
-        var canvasHeight = canvas.clientHeight;
+        var canvasWidth = canvas.width;
+        var canvasHeight = canvas.height;
         var context = canvas.getContext('2d');
 
-        var pressStart = new Image();
-        pressStart.src = "img/pressstartimage.png";
+        drawPressPlay();
 
-        pressStart.onload = function () {
-            var newWidth = pressStart.width / 30;
-            var newHeight = pressStart.height / 30;
+        var isDrawn = true;
 
-            var midCanvas = canvasWidth * 0.5;
-            var imgMidPoint = newWidth * 0.5;
-            var idealCanvasWidth = midCanvas - imgMidPoint;
-            var idealCanvasHeight = canvasHeight * 0.2;
+        var pressPlayDrawing = setInterval(() => {
+            if (isDrawn) {
+                context.clearRect(0, 0, canvasWidth, canvasHeight);
+            }
+            else {
+                drawPressPlay();
+            }
 
-            context.drawImage(pressStart, idealCanvasWidth, idealCanvasHeight, newWidth, newHeight);
+            isDrawn = !isDrawn;
+        }, 600)
+
+        document.addEventListener('keypress', logKey);
+
+        function logKey(e) {
+            if (e.code == 'Space') {
+                canvas.clearInterval(pressPlayDrawing);
+            }
         }
+
+        function drawPressPlay() {
+            var pressStart = new Image();
+            pressStart.id = 'press-start';
+            pressStart.src = "img/pressstartimage.png";
+
+            pressStart.onload = function () {
+                var newWidth = pressStart.width / 22;
+                var newHeight = pressStart.height / 22;
+
+                var midCanvas = canvasWidth * 0.5;
+                var imgMidPoint = newWidth * 0.5;
+                var idealCanvasWidth = midCanvas - imgMidPoint;
+                var idealCanvasHeight = canvasHeight * 0.2;
+
+                context.drawImage(pressStart, idealCanvasWidth, idealCanvasHeight, newWidth, newHeight);
+            }
+        }
+
+        
+
+        
     }
 }
