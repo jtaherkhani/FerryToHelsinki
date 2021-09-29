@@ -59,6 +59,7 @@ window.ferryMainMenuFunctions = {
         var idealCanvasHeightStartPoint = canvasHeight * 0.2;
         var context = canvas.getContext('2d');
         var refreshMenuIntervalId = 0;
+        var optionsMenuIntervalId = 0;
 
         drawPressPlay();
 
@@ -122,6 +123,10 @@ window.ferryMainMenuFunctions = {
         selector.id = 'selector';
         selector.src = 'img/popcornselector.png';
 
+        var menuOptions = new Image();
+        menuOptions.id = 'menu-options';
+        menuOptions.src = 'img/optionsmenu.png';
+
         // instantiate all dimensions as we can't reliably control when each value is loading
         var newGameWidth = 65.055;
         var newGameHeight = 6.944;
@@ -132,21 +137,27 @@ window.ferryMainMenuFunctions = {
         var optionsWidth = 56.833;
         var optionsHeight = 7.33;
 
-        var selectorWidth = 11;
+        var selectorWidth = 10;
         var selectorHeight = 8;
+
+        var menuOptionsWidth = canvasWidth*.91;
+        var menuOptionsHeight = canvasHeight*.94;
 
         // instantiate where to draw images
         var newGameMidPoint = newGameWidth * 0.5;
         var canvasImageWidthPosition = midCanvas - newGameMidPoint;
+        var optionsMenuWidthPosition = midCanvas - (menuOptionsWidth * .5);
         var selectorWidthPosition = canvasImageWidthPosition - 20;
-        
+
+
+
         var newGameCanvasHeightPosition = idealCanvasHeightStartPoint;
         var loadGameCanvasHeightPosition = newGameCanvasHeightPosition + 20;
         var optionsCanvasHeightPosition = loadGameCanvasHeightPosition + 20;
 
 
         function logMainMenuActions(e) {
-            if (e.code == 'ArrowUp' || e.code == 'ArrowDown') { // 38 = UP and 39 = DOWN
+            if (e.code == 'ArrowUp' || e.code == 'ArrowDown') {
                 switch (currentPopcornPosition) {
                     case popcornPositions.NEW:
                         currentPopcornPosition = (e.code == 'ArrowUp' ? popcornPositions.OPTIONS : popcornPositions.LOAD);
@@ -159,6 +170,33 @@ window.ferryMainMenuFunctions = {
                         break;
                 }
             }
+            else if (e.code == 'Enter') {
+                clearInterval(refreshMenuIntervalId);
+                document.removeEventListener('keydown', logMainMenuActions);
+
+                clearCanvas();
+                switch (currentPopcornPosition) {
+                    case (popcornPositions.OPTIONS):
+                        drawInitialExtendedOptions();
+
+                        optionsMenuIntervalId = setInterval(() => {
+                            clearCanvas();
+                            redrawExtendedOptions();
+                        }, 33);
+
+                        break;
+                }
+            }
+        }
+
+        function drawInitialExtendedOptions() {
+            menuOptions.onload = function () {
+                context.drawImage(menuOptions, optionsMenuWidthPosition, 0, menuOptionsWidth, menuOptionsHeight);
+            }
+        }
+
+        function redrawExtendedOptions() {
+            context.drawImage(menuOptions, optionsMenuWidthPosition, 0, menuOptionsWidth, menuOptionsHeight);
         }
 
         function clearCanvas() {
