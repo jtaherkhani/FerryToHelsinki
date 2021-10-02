@@ -97,37 +97,57 @@ window.ferryMainMenuFunctions = {
             }
         }
 
-        // instantiate main menu constructs
+        // instantiate main menu positions
 
         const popcornPositions = {
             NEW: "new-game",
             LOAD: "load-game",
-            OPTIONS: "options",
+            OPTIONS: "options"
         }
 
         var currentPopcornPosition = popcornPositions.NEW;
 
-        var newGame = new Image();
-        newGame.id = 'new-game';
-        newGame.src = "img/newgame.png";
+        // instantiate options menu positions
+        const sodaPositions = {
+            STARING: "staring-mode",
+            SPEED: "speed-mode",
+            COCKS: "translate-cocktails",
+            DIFF: "difficulty",
+            RETURN: "return"
+        }
 
-        var loadGame = new Image();
-        loadGame.id = 'load-game';
-        loadGame.src = "img/loadgame.png";
+        var currentSodaPosition = sodaPositions.STARING;
 
-        var options = new Image();
-        options.id = 'options';
-        options.src = 'img/options.png';
+        var optionStatesDictionary = {
+            "staring-mode": "Y",
+            "speed-mode": "N",
+            "translate-cocktails": "N",
+            "difficulty": "ad"
+        };
 
-        var selector = new Image();
-        selector.id = 'selector';
-        selector.src = 'img/popcornselector.png';
+        // Instantiate main menu options
+        var newGame = createImage('new-game', "img/newgame.png");
+        var loadGame = createImage('load-game', "img/loadgame.png");
+        var options = createImage('options', "img/options.png");
+        var mainMenuSelector = createImage('main-menu-selector', "img/popcornselector.png");
 
-        var menuOptions = new Image();
-        menuOptions.id = 'menu-options';
-        menuOptions.src = 'img/optionsmenu.png';
+        // Instantiate options menu selections
+        var menuOptions = createImage('menu-options', "img/optionsmenu.png");
+        var staringMode = createImage('staring-mode', "img/enablestaringmodeoption.png");
+        var staringModeYesOption = createImage('yes-value', "img/yesmenuoption.png");
+        var staringModeNoOption = createImage('no-value', "img/nomenuoption.png");
+        var optionsSelector = createImage('options-selector', "img/popcornselector.png");
 
-        // instantiate all dimensions as we can't reliably control when each value is loading
+        // Shorthand method to create an image
+        function createImage(id, src) {
+            var newImage = new Image();
+            newImage.id = id;
+            newImage.src = src;
+
+            return newImage;
+        }
+
+        // Instantiate all dimensions as we can't reliably control when each value is loading
         var newGameWidth = 65.055;
         var newGameHeight = 6.944;
 
@@ -140,21 +160,35 @@ window.ferryMainMenuFunctions = {
         var selectorWidth = 10;
         var selectorHeight = 8;
 
+        // Instantiate options menu dimensions
         var menuOptionsWidth = canvasWidth*.91;
-        var menuOptionsHeight = canvasHeight*.94;
+        var menuOptionsHeight = canvasHeight * .94;
 
-        // instantiate where to draw images
+        var staringModeWidth = 130;
+        var staringModeHeight = 8.5;
+
+        var yesOptionWidth = 11;
+        var yesOptionHeight = 7;
+
+        var noOptionWidth = 11;
+        var noOptionHeight = 7;
+
+        // instantiate where to draw main-menu images
         var newGameMidPoint = newGameWidth * 0.5;
         var canvasImageWidthPosition = midCanvas - newGameMidPoint;
         var optionsMenuWidthPosition = midCanvas - (menuOptionsWidth * .5);
-        var selectorWidthPosition = canvasImageWidthPosition - 20;
-
-
+        var mainMenuSelectorWidthPosition = canvasImageWidthPosition - 20;
 
         var newGameCanvasHeightPosition = idealCanvasHeightStartPoint;
         var loadGameCanvasHeightPosition = newGameCanvasHeightPosition + 20;
         var optionsCanvasHeightPosition = loadGameCanvasHeightPosition + 20;
 
+        // instantiate where to draw options menu images
+        var staringModeWidthPosition = menuOptionsWidth * .18 // start from 20% over in the usable space
+        var staringModeHeightPosition = menuOptionsHeight * .3 // start from 10% of the screen
+        var optionsSelectorWidthPosition = menuOptionsWidth * .11;
+
+        var YesNoOptionWidthPosition = menuOptionsWidth * .9; // start from 80% over in the usable space
 
         function logMainMenuActions(e) {
             if (e.code == 'ArrowUp' || e.code == 'ArrowDown') {
@@ -171,6 +205,8 @@ window.ferryMainMenuFunctions = {
                 }
             }
             else if (e.code == 'Enter') {
+                var audio = new Audio("sounds/ootselect.wav");
+                audio.play();
                 clearInterval(refreshMenuIntervalId);
                 document.removeEventListener('keydown', logMainMenuActions);
 
@@ -184,7 +220,63 @@ window.ferryMainMenuFunctions = {
                             redrawExtendedOptions();
                         }, 33);
 
+                        document.addEventListener('keydown', logExtendedOptionsActions);
+
                         break;
+                }
+            }
+        }
+
+        function logExtendedOptionsActions(e) {
+            if (e.code == 'Enter') {
+                switch (currentSodaPosition) {
+                    case (sodaPositions.STARING):
+                        optionStatesDictionary["staring-mode"] =
+                            optionStatesDictionary["staring-mode"] == "Y"
+                                ? "N"
+                                : "Y";
+
+                        break;
+
+                    case (sodaPositions.SPEED):
+                        optionsStatesDictionary["speed-mode"] =
+                            optionsStatesDictionary["speed-mode"] == "Y"
+                                ? "N"
+                                : "Y";
+
+                        break;
+
+                    case (sodaPositions.COCKS):
+                        optionsStatesDictionary["translate-cocktails"] =
+                            optionsStatesDictionary["translate-cocktails"] == "Y"
+                                ? "N"
+                                : "Y";
+
+                        break;
+
+                    case (sodaPositions.DIFF):
+                        optionsStatesDictionary["difficulty"] =
+                            optionsStatesDictionary["difficulty"] == "ad"
+                                ? "ex"
+                                : "ad";
+                }
+            }
+            else if (e.code == 'ArrowUp' || e.code == 'ArrowDown') {
+                switch (currentSodaPosition) {
+                    case sodaPositions.STARING:
+                        currentSodaPosition = (e.code == 'ArrowUp' ? sodaPositions.RETURN : sodaPositions.SPEED);
+                        break;
+                    case sodaPositions.SPEED:
+                        currentSodaPosition = (e.code == 'ArrowUp' ? sodaPositions.STARING : sodaPositions.COCKS);
+                        break;
+                    case sodaPositions.COCKS:
+                        currentSodaPosition = (e.code == 'ArrowUp' ? sodaPositions.SPEED : sodaPositions.DIFF);
+                        break;
+                    case sodaPositions.DIFF:
+                        currentSodaPosition = (e.code == 'ArrowUp' ? sodaPositions.COCKS : sodaPositions.RETURN);
+                        break;
+                    case sodaPositions.RETURN:
+                        currentSodaPosition = (e.code == 'ArrowUp' ? sodaPositions.DIFF : sodaPositions.STARING);
                 }
             }
         }
@@ -193,10 +285,48 @@ window.ferryMainMenuFunctions = {
             menuOptions.onload = function () {
                 context.drawImage(menuOptions, optionsMenuWidthPosition, 0, menuOptionsWidth, menuOptionsHeight);
             }
+
+            staringMode.onload = function () {
+                context.drawImage(staringMode, staringModeWidthPosition, staringModeHeightPosition, staringModeWidth, staringModeHeight);
+            }
+
+            staringModeYesOption.onload = function () {
+                context.drawImage(staringModeYesOption, YesNoOptionWidthPosition, staringModeHeightPosition, yesOptionWidth, yesOptionHeight);
+            }
+
+            var optionSelectorHeightPosition = findNextOptionSelectorHeightPosition();
+
+            optionsSelector.onload = function () {
+                context.drawImage(optionsSelector, optionsSelectorWidthPosition, optionSelectorHeightPosition, selectorWidth, selectorHeight);
+            }
         }
 
         function redrawExtendedOptions() {
             context.drawImage(menuOptions, optionsMenuWidthPosition, 0, menuOptionsWidth, menuOptionsHeight);
+            context.drawImage(staringMode, staringModeWidthPosition, staringModeHeightPosition, staringModeWidth, staringModeHeight);
+
+            if (optionStatesDictionary["staring-mode"] == "Y") {
+                context.drawImage(staringModeYesOption, YesNoOptionWidthPosition, staringModeHeightPosition, yesOptionWidth, yesOptionHeight);
+            }
+            else {
+                context.drawImage(staringModeNoOption, YesNoOptionWidthPosition, staringModeHeightPosition, noOptionWidth, noOptionHeight);
+            }
+
+            var optionSelectorHeightPosition = findNextOptionSelectorHeightPosition();
+            context.drawImage(optionsSelector, optionsSelectorWidthPosition, optionSelectorHeightPosition, selectorWidth, selectorHeight);
+
+        }
+
+        function findNextOptionSelectorHeightPosition() {
+            var optionSelectorHeightPosition = 0;
+
+            switch (currentSodaPosition) {
+                case sodaPositions.STARING:
+                    optionSelectorHeightPosition = staringModeHeightPosition;
+                    break;
+            }
+
+            return optionSelectorHeightPosition;
         }
 
         function clearCanvas() {
@@ -216,9 +346,9 @@ window.ferryMainMenuFunctions = {
                 context.drawImage(options, canvasImageWidthPosition, optionsCanvasHeightPosition, optionsWidth, optionsHeight);
             }
 
-            selector.onload = function () {
+            mainMenuSelector.onload = function () {
                 var selectorCanvasHeightPosition = findNextSelectorPosition();
-                context.drawImage(selector, selectorWidthPosition, selectorCanvasHeightPosition, selectorWidth, selectorHeight);
+                context.drawImage(selector, mainMenuSelectorWidthPosition, selectorCanvasHeightPosition, selectorWidth, selectorHeight);
             }
         }
 
@@ -228,7 +358,7 @@ window.ferryMainMenuFunctions = {
             context.drawImage(options, canvasImageWidthPosition, optionsCanvasHeightPosition, optionsWidth, optionsHeight);
 
             var selectorCanvasHeightPosition = findNextSelectorPosition();
-            context.drawImage(selector, selectorWidthPosition, selectorCanvasHeightPosition, selectorWidth, selectorHeight);
+            context.drawImage(mainMenuSelector, mainMenuSelectorWidthPosition, selectorCanvasHeightPosition, selectorWidth, selectorHeight);
         }
 
         function findNextSelectorPosition() {
