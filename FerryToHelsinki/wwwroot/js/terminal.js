@@ -78,23 +78,26 @@ window.ferryMainMenuFunctions = {
         document.addEventListener('keypress', logPressStart);
 
         function logPressStart(e) {
-            if (e.code == 'Space') {
-                var audio = new Audio("sounds/ootpressstart.wav");
-                audio.play();
+            if (e.code == 'Enter') {
+                pressStartAudio.play();
                 
                 document.removeEventListener('keypress', logPressStart);
                 clearInterval(pressPlayDrawing);
 
-                clearCanvas();
-                drawInitialMainMenu();
-
-                refreshMenuIntervalId = setInterval(() => {
-                    clearCanvas();
-                    redrawMainMenu();
-                }, 33);
-
-                document.addEventListener('keydown', logMainMenuActions);
+                OpenMainMenu();
             }
+        }
+
+        function OpenMainMenu() {
+            clearCanvas();
+            drawInitialMainMenu();
+
+            refreshMenuIntervalId = setInterval(() => {
+                clearCanvas();
+                redrawMainMenu();
+            }, 33);
+
+            document.addEventListener('keydown', logMainMenuActions);
         }
 
         // instantiate main menu positions
@@ -125,6 +128,10 @@ window.ferryMainMenuFunctions = {
             "difficulty": "ad"
         };
 
+        // Instantiate Sounds
+        var menuSelectAudio = new Audio("sounds/ootselect.wav");
+        var pressStartAudio = new Audio("sounds/ootpressstart.wav");
+
         // Instantiate main menu options
         var newGame = createImage('new-game', "img/newgame.png");
         var loadGame = createImage('load-game', "img/loadgame.png");
@@ -133,9 +140,25 @@ window.ferryMainMenuFunctions = {
 
         // Instantiate options menu selections
         var menuOptions = createImage('menu-options', "img/optionsmenu.png");
+
         var staringMode = createImage('staring-mode', "img/enablestaringmodeoption.png");
-        var staringModeYesOption = createImage('yes-value', "img/yesmenuoption.png");
-        var staringModeNoOption = createImage('no-value', "img/nomenuoption.png");
+        var staringModeYesOption = createImage('yes-value-stare', "img/yesmenuoption.png");
+        var staringModeNoOption = createImage('no-value-stare', "img/nomenuoption.png");
+
+        var speedRunMode = createImage('speed-run', "img/speedrunmodeoption.png");
+        var speedRunModeYesOption = createImage('yes-value-speed', "img/yesmenuoption.png");
+        var speedRunModeNoOption = createImage('no-value-speed', "img/nomenuoption.png");
+
+        var translateCocks = createImage('translate-cocks', "img/translatecocktailsoption.png");
+        var translateCocksYesOption = createImage('yes-value-translate', "img/yesmenuoption.png");
+        var translateCocksNoOption = createImage('no-value-translate', "img/nomenuoption.png");
+
+        var difficulty = createImage('difficulty', "img/difficultyoption.png");
+        var adequateDifficulty = createImage('adequate-difficulty', "img/adequatedifficulty.png");
+        var excessiveDifficulty = createImage('excessive-difficulty', "img/excessivedifficulty.png");
+
+        var returnToMainMenu = createImage('return-to-main-menu', "img/returntomainmenu.png");
+
         var optionsSelector = createImage('options-selector', "img/popcornselector.png");
 
         // Shorthand method to create an image
@@ -164,17 +187,35 @@ window.ferryMainMenuFunctions = {
         var menuOptionsWidth = canvasWidth*.91;
         var menuOptionsHeight = canvasHeight * .94;
 
-        var staringModeWidth = 130;
+        var staringModeWidth = 143;
         var staringModeHeight = 8.5;
 
+        var speedRunModeWidth = 115;
+        var speedRunModeHeight = 8.5;
+
+        var translateCocksWidth = 200;
+        var translateCocksHeight = 8.5;
+
+        var difficultyWidth = 65;
+        var difficultyHeight = 8.5;
+
+        var adequateDifficultyWidth = 65;
+        var adequateDifficultyHeight = 8.5;
+
+        var excessiveDifficultyWidth = 65;
+        var excessiveDifficultyHeight = 8.5;
+
+        var returnToMainMenuWidth = 170;
+        var returnToMainMenuHeight = 8.5;
+
         var yesOptionWidth = 11;
-        var yesOptionHeight = 7;
+        var yesOptionHeight = 8.5;
 
         var noOptionWidth = 11;
-        var noOptionHeight = 7;
+        var noOptionHeight = 8.5;
 
         // instantiate where to draw main-menu images
-        var newGameMidPoint = newGameWidth * 0.5;
+        var newGameMidPoint = newGameWidth * .5;
         var canvasImageWidthPosition = midCanvas - newGameMidPoint;
         var optionsMenuWidthPosition = midCanvas - (menuOptionsWidth * .5);
         var mainMenuSelectorWidthPosition = canvasImageWidthPosition - 20;
@@ -184,9 +225,23 @@ window.ferryMainMenuFunctions = {
         var optionsCanvasHeightPosition = loadGameCanvasHeightPosition + 20;
 
         // instantiate where to draw options menu images
-        var staringModeWidthPosition = menuOptionsWidth * .18 // start from 20% over in the usable space
-        var staringModeHeightPosition = menuOptionsHeight * .3 // start from 10% of the screen
-        var optionsSelectorWidthPosition = menuOptionsWidth * .11;
+        var staringModeWidthPosition = menuOptionsWidth * .12
+        var optionsSelectorWidthPosition = menuOptionsWidth * .07;
+        var adequateDifficultyWidthPosition = (menuOptionsWidth* .95) - adequateDifficultyWidth;
+        var excessiveDifficultyWidthPosition = (menuOptionsWidth * .95) - excessiveDifficultyWidth;
+
+        var returnToMainMenuMidPoint = returnToMainMenuWidth * .5;
+        var returnToMainMenuWidthPosition = midCanvas - returnToMainMenuMidPoint
+
+        var staringModeHeightPosition = menuOptionsHeight * .3 
+        var speedRunModeHeightPosition = findNextOptionHeightPosition(staringModeHeightPosition);
+        var translateCocksHeightPosition = findNextOptionHeightPosition(speedRunModeHeightPosition);
+        var difficultyHeightPosition = findNextOptionHeightPosition(translateCocksHeightPosition);
+        var returnToMainMenuHeightPosition = menuOptionsHeight * .8; // put to the bottom of the screen
+
+        function findNextOptionHeightPosition(lastHeightPosition) {
+            return lastHeightPosition + 16;
+        }
 
         var YesNoOptionWidthPosition = menuOptionsWidth * .9; // start from 80% over in the usable space
 
@@ -205,14 +260,14 @@ window.ferryMainMenuFunctions = {
                 }
             }
             else if (e.code == 'Enter') {
-                var audio = new Audio("sounds/ootselect.wav");
-                audio.play();
+                menuSelectAudio.play();
                 clearInterval(refreshMenuIntervalId);
                 document.removeEventListener('keydown', logMainMenuActions);
 
                 clearCanvas();
                 switch (currentPopcornPosition) {
                     case (popcornPositions.OPTIONS):
+                        currentSodaPosition = sodaPositions.STARING;
                         drawInitialExtendedOptions();
 
                         optionsMenuIntervalId = setInterval(() => {
@@ -239,26 +294,37 @@ window.ferryMainMenuFunctions = {
                         break;
 
                     case (sodaPositions.SPEED):
-                        optionsStatesDictionary["speed-mode"] =
-                            optionsStatesDictionary["speed-mode"] == "Y"
+                        optionStatesDictionary["speed-mode"] =
+                            optionStatesDictionary["speed-mode"] == "Y"
                                 ? "N"
                                 : "Y";
 
                         break;
 
                     case (sodaPositions.COCKS):
-                        optionsStatesDictionary["translate-cocktails"] =
-                            optionsStatesDictionary["translate-cocktails"] == "Y"
+                        optionStatesDictionary["translate-cocktails"] =
+                            optionStatesDictionary["translate-cocktails"] == "Y"
                                 ? "N"
                                 : "Y";
 
                         break;
 
                     case (sodaPositions.DIFF):
-                        optionsStatesDictionary["difficulty"] =
-                            optionsStatesDictionary["difficulty"] == "ad"
+                        optionStatesDictionary["difficulty"] =
+                            optionStatesDictionary["difficulty"] == "ad"
                                 ? "ex"
                                 : "ad";
+
+                        break;
+
+                    case (sodaPositions.RETURN):
+                        menuSelectAudio.play();
+                        currentPopcornPosition = popcornPositions.NEW;
+                        clearInterval(optionsMenuIntervalId);
+                        document.removeEventListener('keydown', logExtendedOptionsActions);
+                        OpenMainMenu();
+
+                        break;
                 }
             }
             else if (e.code == 'ArrowUp' || e.code == 'ArrowDown') {
@@ -294,6 +360,34 @@ window.ferryMainMenuFunctions = {
                 context.drawImage(staringModeYesOption, YesNoOptionWidthPosition, staringModeHeightPosition, yesOptionWidth, yesOptionHeight);
             }
 
+            speedRunMode.onload = function () {
+                context.drawImage(speedRunMode, staringModeWidthPosition, speedRunModeHeightPosition, speedRunModeWidth, speedRunModeHeight);
+            }
+
+            speedRunModeNoOption.onload = function () {
+                context.drawImage(speedRunModeNoOption, YesNoOptionWidthPosition, speedRunModeHeightPosition, noOptionWidth, noOptionHeight);
+            }
+
+            translateCocks.onload = function () {
+                context.drawImage(translateCocks, staringModeWidthPosition, translateCocksHeightPosition, translateCocksWidth, translateCocksHeight);
+            }
+
+            translateCocksNoOption.onload = function () {
+                context.drawImage(translateCocksNoOption, YesNoOptionWidthPosition, translateCocksHeightPosition, noOptionWidth, noOptionHeight);
+            }
+
+            difficulty.onload = function () {
+                context.drawImage(difficulty, staringModeWidthPosition, difficultyHeightPosition, difficultyWidth, difficultyHeight);
+            }
+
+            adequateDifficulty.onload = function () {
+                context.drawImage(adequateDifficulty, adequateDifficultyWidthPosition, difficultyHeightPosition, adequateDifficultyWidth, adequateDifficultyHeight);
+            }
+
+            returnToMainMenu.onload = function () {
+                context.drawImage(returnToMainMenu, returnToMainMenuWidthPosition, returnToMainMenuHeightPosition, returnToMainMenuWidth, returnToMainMenuHeight);
+            }
+
             var optionSelectorHeightPosition = findNextOptionSelectorHeightPosition();
 
             optionsSelector.onload = function () {
@@ -303,18 +397,39 @@ window.ferryMainMenuFunctions = {
 
         function redrawExtendedOptions() {
             context.drawImage(menuOptions, optionsMenuWidthPosition, 0, menuOptionsWidth, menuOptionsHeight);
-            context.drawImage(staringMode, staringModeWidthPosition, staringModeHeightPosition, staringModeWidth, staringModeHeight);
 
-            if (optionStatesDictionary["staring-mode"] == "Y") {
-                context.drawImage(staringModeYesOption, YesNoOptionWidthPosition, staringModeHeightPosition, yesOptionWidth, yesOptionHeight);
+            context.drawImage(staringMode, staringModeWidthPosition, staringModeHeightPosition, staringModeWidth, staringModeHeight);
+            drawYesNoOption("staring-mode", staringModeYesOption, staringModeNoOption, staringModeHeightPosition);
+
+            context.drawImage(speedRunMode, staringModeWidthPosition, speedRunModeHeightPosition, speedRunModeWidth, speedRunModeHeight);
+            drawYesNoOption("speed-mode", speedRunModeYesOption, speedRunModeNoOption, speedRunModeHeightPosition);
+
+            context.drawImage(translateCocks, staringModeWidthPosition, translateCocksHeightPosition, translateCocksWidth, translateCocksHeight);
+            drawYesNoOption("translate-cocktails", translateCocksYesOption, translateCocksNoOption, translateCocksHeightPosition);
+
+            context.drawImage(difficulty, staringModeWidthPosition, difficultyHeightPosition, difficultyWidth, difficultyHeight);
+            if (optionStatesDictionary["difficulty"] == "ad") {
+                context.drawImage(adequateDifficulty, adequateDifficultyWidthPosition, difficultyHeightPosition, adequateDifficultyWidth, adequateDifficultyHeight);
             }
             else {
-                context.drawImage(staringModeNoOption, YesNoOptionWidthPosition, staringModeHeightPosition, noOptionWidth, noOptionHeight);
+                context.drawImage(excessiveDifficulty, excessiveDifficultyWidthPosition, difficultyHeightPosition, excessiveDifficultyWidth, excessiveDifficultyHeight);
+            }
+
+            context.drawImage(returnToMainMenu, returnToMainMenuWidthPosition, returnToMainMenuHeightPosition, returnToMainMenuWidth, returnToMainMenuHeight);
+
+            function drawYesNoOption(key, yesOptionToDraw, noOptionToDraw, heightPosition) {
+                if (optionStatesDictionary[key] == "Y") {
+                    context.drawImage(yesOptionToDraw, YesNoOptionWidthPosition, heightPosition, yesOptionWidth, yesOptionHeight);
+                }
+                else {
+                    context.drawImage(noOptionToDraw, YesNoOptionWidthPosition, heightPosition, noOptionWidth, noOptionHeight);
+                }
             }
 
             var optionSelectorHeightPosition = findNextOptionSelectorHeightPosition();
-            context.drawImage(optionsSelector, optionsSelectorWidthPosition, optionSelectorHeightPosition, selectorWidth, selectorHeight);
+            var selectorWidthPosition = currentSodaPosition == sodaPositions.RETURN ? returnToMainMenuWidthPosition - 20 : optionsSelectorWidthPosition;
 
+            context.drawImage(optionsSelector, selectorWidthPosition, optionSelectorHeightPosition, selectorWidth, selectorHeight);
         }
 
         function findNextOptionSelectorHeightPosition() {
@@ -323,6 +438,22 @@ window.ferryMainMenuFunctions = {
             switch (currentSodaPosition) {
                 case sodaPositions.STARING:
                     optionSelectorHeightPosition = staringModeHeightPosition;
+                    break;
+
+                case sodaPositions.SPEED:
+                    optionSelectorHeightPosition = speedRunModeHeightPosition;
+                    break;
+
+                case sodaPositions.COCKS:
+                    optionSelectorHeightPosition = translateCocksHeightPosition;
+                    break;
+
+                case sodaPositions.DIFF:
+                    optionSelectorHeightPosition = difficultyHeightPosition;
+                    break;
+
+                case sodaPositions.RETURN:
+                    optionSelectorHeightPosition = returnToMainMenuHeightPosition;
                     break;
             }
 
