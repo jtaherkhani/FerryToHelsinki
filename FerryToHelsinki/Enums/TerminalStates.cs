@@ -9,6 +9,7 @@ namespace FerryToHelsinki.Enums
     {
         Opened,
         FerryToHelsinkiStart,
+        FerryToHelsinkiLoading,
         FerryToHelsinkiGameplay
     }
 }

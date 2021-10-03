@@ -51,7 +51,8 @@
 }
 
 window.ferryMainMenuFunctions = {
-    animateCanvas: function () {
+    animateCanvas: function (netReference) {
+        var ferryStartedReference = netReference;
         var canvas = document.getElementById('ferry-game-selection');
         var canvasWidth = canvas.width;
         var midCanvas = canvasWidth * 0.5;
@@ -266,6 +267,10 @@ window.ferryMainMenuFunctions = {
 
                 clearCanvas();
                 switch (currentPopcornPosition) {
+                    case (popcornPositions.NEW):
+                        ferryStartedReference.invokeMethodAsync("NewGameStartAsync", JSON.stringify(optionStatesDictionary));
+                        break;
+
                     case (popcornPositions.OPTIONS):
                         currentSodaPosition = sodaPositions.STARING;
                         drawInitialExtendedOptions();
@@ -525,9 +530,5 @@ window.ferryMainMenuFunctions = {
                 context.drawImage(pressStart, idealCanvasWidth, idealCanvasHeightStartPoint, newWidth, newHeight);
             }
         }
-
-        
-
-        
     }
 }

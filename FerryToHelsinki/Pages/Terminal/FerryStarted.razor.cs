@@ -3,13 +3,16 @@ using FerryToHelsinki.Services;
 using FerryToHelsinkiWebsite.Data.Constants;
 using Figgle;
 using Microsoft.JSInterop;
+using System;
 using System.Threading.Tasks;
 
 namespace FerryToHelsinki.Pages.Terminal
 {
-    public partial class FerryStarted
+    public partial class FerryStarted : IDisposable
     {
         protected MessageService MessageService { get; set; }
+
+        private DotNetObjectReference<FerryStarted> ferryStartedReference;
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -21,10 +24,26 @@ namespace FerryToHelsinki.Pages.Terminal
             if (ShouldRenderForTerminalState)
             {
                 await JsRuntime.InvokeVoidAsync("terminalFunctions.animateFerries", FerryFrames);
-                await JsRuntime.InvokeVoidAsync("ferryMainMenuFunctions.animateCanvas");
+
+                ferryStartedReference = DotNetObjectReference.Create(this);
+                await JsRuntime.InvokeVoidAsync("ferryMainMenuFunctions.animateCanvas", ferryStartedReference);
             }
 
             await base.OnAfterRenderAsync(firstRender);
+        }
+
+        [JSInvokable]
+        public async Task NewGameStartAsync(string options) // take options in the future and pass back to the gameplay.
+        {
+            await UpdateTerminalState(Enums.TerminalStates.FerryToHelsinkiLoading);
+        }
+
+        public void Dispose()
+        {
+            if (ferryStartedReference != null)
+            {
+                ferryStartedReference.Dispose();
+            }
         }
 
         private string Title =>
