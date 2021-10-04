@@ -1,5 +1,18 @@
-﻿<h3>FerryGameplayLoading</h3>
+﻿@using FerryToHelsinki.Shared.BaseComponents;
+@inherits TerminalStateComponent;
 
-@code {
-
+@if (ShouldRenderForTerminalState)
+{
+    <div id="ferry-started">
+        <div id="left-sidebar">
+            <img id="sidebar" src="img/sidebanner.png" alt="left-sidebar">
+        </div>
+        <div id="ferry-detail">
+            <canvas id="ferry-loading">
+            </canvas>
+        </div>
+        <div id="right-sidebar">
+            <img id="sidebar" src="img/sidebanner.png" alt="right-sidebar">
+        </div>
+    </div>
 }

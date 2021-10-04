@@ -1,5 +1,4 @@
-﻿using FerryToHelsinki.Enums;
-using FerryToHelsinki.Filing;
+﻿using FerryToHelsinki.Filing;
 using FerryToHelsinki.Services;
 using FerryToHelsinkiWebsite.Data.Constants;
 using System.Threading.Tasks;

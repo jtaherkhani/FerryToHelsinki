@@ -5,7 +5,8 @@
     <div id="screen">
         <div id="window">
             <OpenedTerminal OnTerminalStateChanged="@UpdateTerminalState" CurrentTerminalState="@CurrentTerminalState" ExpectedTerminalState="Enums.TerminalStates.Opened"/>
-            <FerryStarted OnTerminalStateChanged="@UpdateTerminalState" CurrentTerminalState="@CurrentTerminalState" ExpectedTerminalState="Enums.TerminalStates.FerryToHelsinkiStart" />
+            <FerryStarted OnTerminalStateChanged="@UpdateTerminalState" CurrentTerminalState="@CurrentTerminalState" ExpectedTerminalState="Enums.TerminalStates.FerryToHelsinkiStart"/>
+            <FerryGameplayLoading OnTerminalStateChanged="@UpdateTerminalState" CurrentTerminalState="@CurrentTerminalState" ExpectedTerminalState="Enums.TerminalStates.FerryToHelsinkiLoading"/>
             <div id="scanline" />
         </div>
     </div>

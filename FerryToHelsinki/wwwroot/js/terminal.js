@@ -532,3 +532,108 @@ window.ferryMainMenuFunctions = {
         }
     }
 }
+
+window.ferryLoadingFunctions = {
+    animateLoading: function () {
+        var canvas = document.getElementById('ferry-loading');
+        var canvasWidth = canvas.width;
+        var canvasHeight = canvas.height;
+        var midCanvasWidth = canvasWidth * 0.5;
+        var midCanvasHeight = canvasHeight * 0.5;
+
+        var context = canvas.getContext('2d');
+
+        // Instantiate image transitional states
+        var l_state = createImage('l', "img/loading/L.png");
+        var lo_state = createImage('lo', "img/loading/LO.png");
+        var loa_state = createImage('loa', "img/loading/LOA.png");
+        var load_state = createImage('load', "img/loading/LOAD.png");
+        var loadi_state = createImage('loadi', "img/loading/LOADI.png");
+        var loadin_state = createImage('loadin', "img/loading/LOADIN.png");
+        var loading_state = createImage('loading', "img/loading/LOADING.png");
+
+        function createImage(id, src) {
+            var newImage = new Image();
+            newImage.id = id;
+            newImage.src = src;
+
+            return newImage;
+        }
+
+        // Should all be the same width and height
+        var imageWidth = 200;
+        var imageHeight = 15;
+
+        // Instantiate where on the screen we should draw
+        var loadingMidPoint = imageWidth * .5;
+        var canvasImageWidthPosition = midCanvasWidth - loadingMidPoint;
+
+        // Instantiate a constant representing the states of the loading control
+        const loadingStates = {
+            L: "l",
+            LO:"lo",
+            LOA:"loa",
+            LOAD: "load",
+            LOADI: "loadi",
+            LOADIN: "loadin",
+            LOADING: "loading"
+        }
+
+        var currentLoadingState = loadingStates.L;
+
+        drawInitialLoading();
+
+        var cycleLoadingSteps = setInterval(() => {
+            clearCanvas();
+            redrawInitialLoading();
+        }, 33);
+
+
+        function drawInitialLoading() {
+            l_state.onload = function () {
+                context.drawImage(l_state, canvasImageWidthPosition, midCanvasHeight, imageWidth, imageHeight);
+            }
+        }
+
+        function redrawInitialLoading() {
+            var nextLoadingStateImage = setNextLoadingStateToDraw();
+            context.drawImage(nextLoadingStateImage, canvasImageWidthPosition, midCanvasHeight, imageWidth, imageHeight);
+        }
+
+        function setNextLoadingStateToDraw() {
+            switch (currentLoadingState) {
+                case loadingStates.L:
+                    currentLoadingState = loadingStates.LO;
+                    return lo_state;
+                    
+                case loadingStates.LO:
+                    currentLoadingState = loadingStates.LOA;
+                    return loa_state;
+
+                case loadingStates.LOA:
+                    currentLoadingState = loadingStates.LOAD;
+                    return load_state;
+
+                case loadingStates.LOAD:
+                    currentLoadingState = loadingStates.LOADI;
+                    return loadi_state;
+
+                case loadingStates.LOADI:
+                    currentLoadingState = loadingStates.LOADIN;
+                    return loadin_state;
+
+                case loadingStates.LOADIN:
+                    currentLoadingState = loadingStates.LOADING;
+                    return loading_state;
+
+                case loadingStates.LOADING:
+                    currentLoadingState = loadingStates.L;
+                    return l_state;
+            }
+        }
+
+        function clearCanvas() {
+            context.clearRect(0, 0, canvasWidth, canvasHeight);
+        }
+    }
+}
