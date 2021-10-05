@@ -10,6 +10,12 @@ namespace FerryToHelsinki.Hubs
         {
             await Clients.All.SendMessage(userName, messageContents);
         }
+
+        public async Task StartGame(string startGameMessage)
+        {
+            await Clients.All.StartGame(startGameMessage);
+        }
+
         public override Task OnConnectedAsync()
         {
             Console.WriteLine($"{Context.ConnectionId} connected");
@@ -26,5 +32,7 @@ namespace FerryToHelsinki.Hubs
     public interface IMessageClient
     {
         Task SendMessage(string userName, string messageContents);
+
+        Task StartGame(string startGameMessage);
     }
 }

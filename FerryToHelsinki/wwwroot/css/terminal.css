@@ -111,7 +111,7 @@ body {
     grid-template-columns: 10% 1fr 10%;
     column-gap: 10px;
     height: inherit;
-    width: 95%;
+    width: 100%;
     align-self: center;
 }
 
@@ -172,6 +172,11 @@ body {
 
 #ferry-game-selection {
     width: 100%;
+}
+
+#ferry-loading {
+    width: 100%;
+    height: 100%;
 }
 
 #scanline {

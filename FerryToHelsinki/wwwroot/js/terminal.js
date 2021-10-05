@@ -561,12 +561,14 @@ window.ferryLoadingFunctions = {
         }
 
         // Should all be the same width and height
-        var imageWidth = 200;
-        var imageHeight = 15;
+        var imageWidth = 180;
+        var imageHeight = 60;
 
         // Instantiate where on the screen we should draw
         var loadingMidPoint = imageWidth * .5;
+        var loadingHeightMidPoint = imageHeight * .5;
         var canvasImageWidthPosition = midCanvasWidth - loadingMidPoint;
+        var canvasImageHeightPosition = midCanvasHeight - loadingHeightMidPoint;
 
         // Instantiate a constant representing the states of the loading control
         const loadingStates = {
@@ -586,18 +588,18 @@ window.ferryLoadingFunctions = {
         var cycleLoadingSteps = setInterval(() => {
             clearCanvas();
             redrawInitialLoading();
-        }, 33);
+        }, 200);
 
 
         function drawInitialLoading() {
             l_state.onload = function () {
-                context.drawImage(l_state, canvasImageWidthPosition, midCanvasHeight, imageWidth, imageHeight);
+                context.drawImage(l_state, canvasImageWidthPosition, canvasImageHeightPosition, imageWidth, imageHeight);
             }
         }
 
         function redrawInitialLoading() {
             var nextLoadingStateImage = setNextLoadingStateToDraw();
-            context.drawImage(nextLoadingStateImage, canvasImageWidthPosition, midCanvasHeight, imageWidth, imageHeight);
+            context.drawImage(nextLoadingStateImage, canvasImageWidthPosition, canvasImageHeightPosition, imageWidth, imageHeight);
         }
 
         function setNextLoadingStateToDraw() {

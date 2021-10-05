@@ -16,19 +16,27 @@ namespace FerryToHelsinki.Pages.Terminal
         [Inject]
         private NavigationManager NavigationManager { get; set; }
 
-        private HubConnection hubConnection;
+        private HubConnection _hubConnection;
+
+        public async ValueTask DisposeAsync()
+        {
+            if (_hubConnection is not null)
+            {
+                await _hubConnection.DisposeAsync();
+            }
+        }
 
         protected override async Task OnInitializedAsync()
         {
-            hubConnection = new HubConnectionBuilder()
+            _hubConnection = new HubConnectionBuilder()
                .WithUrl(NavigationManager.ToAbsoluteUri("/messagehub"))
                .Build();
 
-            hubConnection.On<string, string>("SendMessage", (user, messageContents) => OnMessageReceived(user, messageContents));
-            await hubConnection.StartAsync();
+            _hubConnection.On<string, string>("SendMessage", (user, messageContents) => OnMessageReceivedAsync(user, messageContents));
+            await _hubConnection.StartAsync();
         }
 
-        private async Task OnMessageReceived(string user, string messageContents)
+        private async Task OnMessageReceivedAsync(string user, string messageContents)
         {
             var message = new Message
             {

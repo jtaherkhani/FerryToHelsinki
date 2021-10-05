@@ -1,0 +1,26 @@
+﻿@page "/chatgame"
+
+
+<h3>ChatGame</h3>
+
+@if (!_gameStarted)
+{
+    <button type="button" @onclick="@StartGameAsync"><span class="oi oi-chat" aria-hidden="true"></span> Start Game!</button>
+}
+else
+{
+    <div id="scrollbox">
+        @foreach (var message in _messages)
+        {
+            var stringClass = message.UserName != HostUserName ? "received" : "sent";
+
+            <div class="@stringClass">
+                <div class="user">@message.UserName</div>
+                <div class="msg">@message.MessageContents</div>
+            </div>
+        }
+    </div>
+    <hr />
+    <textarea class="input-lg" placeholder="enter message" @bind="@_message" />
+    <button type="button" class="btn btn-default" @onclick="@(() => SendFerryMessageAsync(_message))">Send</button>
+}
