@@ -13,7 +13,7 @@ namespace FerryToHelsinki.Pages
 
         private bool _gameStarted = false;
         private List<Message> _messages = new();
-        private Message _message = new();
+        private string _messageContents;
 
         private HubConnection _hubConnection;
         private const string HostUserName = "TeriyakiSupreme";
@@ -36,12 +36,12 @@ namespace FerryToHelsinki.Pages
             StateHasChanged();
         }
 
-        public async Task SendFerryMessageAsync(Message newMessage)
+        public async Task SendFerryMessageAsync(string newMessageContents)
         {
-            if (!string.IsNullOrWhiteSpace(newMessage.MessageContents))
+            if (!string.IsNullOrWhiteSpace(newMessageContents))
             {
-                await _hubConnection.SendAsync("SendMessage", newMessage.UserName, newMessage.MessageContents);
-                _message = new();
+                await _hubConnection.SendAsync("SendMessage", HostUserName, newMessageContents);
+                _messageContents = string.Empty;
             }
         }
 
