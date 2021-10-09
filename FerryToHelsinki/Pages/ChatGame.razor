@@ -6,23 +6,25 @@
 <div class="appContainer">
 @if (!_gameStarted)
 {
-    <button type="button" @onclick="@StartGameAsync"><span class="oi oi-chat" aria-hidden="true"></span> Start Game!</button>
+    <button type="button" id="start-chat" @onclick="@StartGameAsync"><span class="oi oi-chat" aria-hidden="true"></span> Start Game!</button>
 }
 else
 {
-    <div id="scrollbox">
-        @foreach (var message in _messages)
-        {
-            var stringClass = message.UserName != HostUserName ? "received" : "sent";
+    <div id="top-pad">
+        <div id="scrollbox">
+            @foreach (var message in _messages)
+            {
+                var stringClass = message.UserName != HostUserName ? "received" : "sent";
 
-            <div class="@stringClass">
-                <div class="user">@message.UserName</div>
-                <div class="msg">@message.MessageContents</div>
-            </div>
-        }
+                <div class="@stringClass">
+                    <div class="user">@message.UserName</div>
+                    <div class="msg">@message.MessageContents</div>
+                </div>
+            }
+        </div>
+        <hr />
+        <textarea class="input-lg" placeholder="enter message" @bind="@_messageContents" />
+        <button type="button" class="btn btn-default" @onclick="@(() => SendFerryMessageAsync(_messageContents))">Send</button>
     </div>
-    <hr />
-    <textarea class="input-lg" placeholder="enter message" @bind="@_messageContents" />
-    <button type="button" class="btn btn-default" @onclick="@(() => SendFerryMessageAsync(_messageContents))">Send</button>
 }
 </div>
