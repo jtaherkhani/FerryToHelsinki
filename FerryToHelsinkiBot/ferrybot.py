@@ -6,11 +6,13 @@ from actionmanager import ActionManager
 from errorhandling import print_message
 from irc import Irc
 from message import Message
+from messageclient import messageclient
 
 class Ferrybot(object):
 
     def __init__(self, config):
         self.add_configuration(config)
+        self.messageclient = messageclient()
 
     def add_configuration(self, config):
         self.irc = Irc(config)
@@ -33,7 +35,7 @@ class Ferrybot(object):
         currTime = time.monotonic()
 
         if self.lastReminder == 0 or currTime - self.lastReminder > self.reminder:
-            self.irc.send_message([Message("Looking for information?", "Type !commands to see how to interact with the Ferry to Helsinki!", True)])
+            self.irc.send_message([Message("", "Type >{COMMAND} to interact with the Ferry to Helsinki!", True)])
             self.lastReminder = currTime
 
     def run_message_pull(self):
@@ -49,16 +51,11 @@ class Ferrybot(object):
             return
 
         messageList = self.parse_message_for_action(newMessage[0]['message'])
-
-        if not self.actionManager.is_action_key_recognized(messageList[0]):
-            self.irc.send_message([Message("Command %s is not recognized", "Type !commands for possible commands" % messageList[0]).create_message()])
-            return
-
-        self.actionManager.run(messageList[0])
+        self.messageclient.post(messageList[0])
 
 
     def should_parse_message_contents(self, messageContents):
-        return messageContents[0] == '!'
+        return messageContents[0] == '>'
             
     def parse_message_for_action(self, messageContents):
         return re.compile(r'\s').split(messageContents, 1)

@@ -25,6 +25,5 @@ namespace FerryToHelsinki.Data
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             await httpBase.PostAsync(uri, content);
         }
-
     }
 }
