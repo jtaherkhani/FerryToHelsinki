@@ -50,15 +50,15 @@ class Ferrybot(object):
         if not newMessage or not self.should_parse_message_contents(newMessage[0]['message']):
             return
 
-        messageList = self.parse_message_for_action(newMessage[0]['message'])
-        self.messageclient.post(messageList[0])
+        message = newMessage[0]['message']
+        fixedMesage = message[1:]
+
+        self.messageclient.post(newMessage[0]['username'], fixedMesage)
 
 
     def should_parse_message_contents(self, messageContents):
         return messageContents[0] == '>'
-            
-    def parse_message_for_action(self, messageContents):
-        return re.compile(r'\s').split(messageContents, 1)
+
 
         
 
