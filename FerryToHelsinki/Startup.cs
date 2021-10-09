@@ -30,7 +30,7 @@ namespace FerryToHelsinki
                     Configuration.GetConnectionString("FerryToHelsinkiContext")));
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSignalR();
+            services.AddSignalR(options => options.EnableDetailedErrors = true);
             services.AddScoped<MessageRepository>();
             services.AddScoped<MessageClient>();
         }

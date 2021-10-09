@@ -279,7 +279,8 @@ body {
     }
 }
 
-@keyframes typing {
+@keyframes typing {+
+
     from {
         width: 100%;
     }
