@@ -9,12 +9,17 @@ namespace FerryToHelsinki.Data
 {
     public class MessageClient
     {
-        public static string baseURL = "https://localhost:44330/";
+        public static string BaseURL =>
+            #if DEBUG
+                "https://localhost:44330/";
+            #else
+                "https://ferrytohelsinki.azurewebsites.net/";
+            #endif
 
         public async Task CreateMessage(Message message)
         {
             using var httpBase = new HttpClient();
-            var uri = new Uri(baseURL + "api/Messages");
+            var uri = new Uri(BaseURL + "api/Messages");
 
             string json = JsonConvert.SerializeObject(message);
             var content = new StringContent(json, Encoding.UTF8, "application/json");

@@ -29,7 +29,7 @@ namespace FerryToHelsinki
                 options.UseSqlServer(
                     Configuration.GetConnectionString("FerryToHelsinkiContext")));
             services.AddRazorPages();
-            services.AddServerSideBlazor();
+            services.AddServerSideBlazor().AddCircuitOptions(option => { option.DetailedErrors = true; });
             services.AddSignalR(options => options.EnableDetailedErrors = true);
             services.AddScoped<MessageRepository>();
             services.AddScoped<MessageClient>();

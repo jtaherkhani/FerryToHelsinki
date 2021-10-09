@@ -56,5 +56,12 @@ namespace FerryToHelsinki.Pages
             _messages.Add(message);
             StateHasChanged();
         }
+        public async ValueTask DisposeAsync()
+        {
+            if (_hubConnection is not null)
+            {
+                await _hubConnection.DisposeAsync();
+            }
+        }
     }
 }
