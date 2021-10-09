@@ -1,12 +1,14 @@
-﻿@using FerryToHelsinki.Shared.BaseComponents;
+﻿@layout FerryToHelsinki.Shared.Layouts.Terminal
+@using FerryToHelsinki.Shared.BaseComponents;
+
 @implements IAsyncDisposable
 
 @inherits TerminalStateComponent;
 
 @if (ShouldRenderForTerminalState)
 {
-    <div class="message-window">
-        @MessageService.MessagePrompt<span id="message" /><br>
-    </div>
+<div class="message-window">
+    @MessageService.MessagePrompt<span id="message" /><br>
+</div>
 }
 

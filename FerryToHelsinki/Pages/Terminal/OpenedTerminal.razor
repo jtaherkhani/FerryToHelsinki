@@ -1,4 +1,5 @@
-﻿@using FerryToHelsinki.Shared.BaseComponents;
+﻿@layout FerryToHelsinki.Shared.Layouts.Terminal
+@using FerryToHelsinki.Shared.BaseComponents;
 
 @inherits TerminalStateComponent;
 
@@ -11,11 +12,10 @@
         <pre id="terminal-welcome" class="terminal-values" />
         @if (IsRendered)
         {
-            <TerminalMessage 
-                CurrentTerminalState="Enums.TerminalStates.Opened" 
-                ExpectedTerminalState="Enums.TerminalStates.Opened" 
-                OnTerminalStateChanged="@UpdateTerminalState" 
-                MessageService="@MessageService" />
+            <TerminalMessage CurrentTerminalState="Enums.TerminalStates.Opened"
+                             ExpectedTerminalState="Enums.TerminalStates.Opened"
+                             OnTerminalStateChanged="@UpdateTerminalState"
+                             MessageService="@MessageService" />
         }
     </div>
 }

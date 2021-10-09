@@ -1,9 +1,9 @@
-﻿@page "/chatgame"
+﻿@layout FerryToHelsinki.Shared.Layouts.Terminal
+@page "/chatgame"
 
 @implements IAsyncDisposable
 
-<h3>ChatGame</h3>
-
+<div class="appContainer">
 @if (!_gameStarted)
 {
     <button type="button" @onclick="@StartGameAsync"><span class="oi oi-chat" aria-hidden="true"></span> Start Game!</button>
@@ -25,3 +25,4 @@ else
     <textarea class="input-lg" placeholder="enter message" @bind="@_messageContents" />
     <button type="button" class="btn btn-default" @onclick="@(() => SendFerryMessageAsync(_messageContents))">Send</button>
 }
+</div>

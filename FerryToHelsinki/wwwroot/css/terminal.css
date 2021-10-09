@@ -300,6 +300,18 @@ body {
 }
 
 /* Rules for chat window instead of terminal directly */
+.appContainer {
+    background-color: white;
+    position: relative;
+    width: 430px;
+    height: 900px;
+    left: 50%;
+    margin: 0px auto;
+    margin-left: -205px;
+    display: inline-block;
+    overflow-y: auto;
+}
+
 textarea {
     border: 1px dashed #888;
     border-radius: 5px;
@@ -315,6 +327,7 @@ textarea {
     border-radius: 10px;
     padding: 20px;
     margin-bottom: 20px;
+    margin-right: 5%;
 }
 
     .received:after, .sent:after {
