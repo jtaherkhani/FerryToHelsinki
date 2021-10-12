@@ -42,6 +42,7 @@
     <Compile Include="message.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="gamestateclient.py" />
     <Compile Include="messageclient.py">
       <SubType>Code</SubType>
     </Compile>

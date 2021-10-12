@@ -7,12 +7,14 @@ from errorhandling import print_message
 from irc import Irc
 from message import Message
 from messageclient import messageclient
+from gamestateclient import gamestateclient
 
 class Ferrybot(object):
 
     def __init__(self, config):
         self.add_configuration(config)
         self.messageclient = messageclient()
+        self.gamestateclient = gamestateclient()
 
     def add_configuration(self, config):
         self.irc = Irc(config)
@@ -35,7 +37,11 @@ class Ferrybot(object):
         currTime = time.monotonic()
 
         if self.lastReminder == 0 or currTime - self.lastReminder > self.reminder:
-            self.irc.send_message([Message("", "Type >{COMMAND} to interact with the Ferry to Helsinki!", True)])
+            if (self.gamestateclient.isGameStarted() == 'true'):
+                self.irc.send_message([Message("", "Type >{COMMAND} to interact with the Ferry to Helsinki!", True)])
+            else:
+                self.irc.send_message([Message("", "Prepare yourself, for the start of the Ferry To Helsinki!", True)])
+                
             self.lastReminder = currTime
 
     def run_message_pull(self):

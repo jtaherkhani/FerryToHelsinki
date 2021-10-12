@@ -31,6 +31,7 @@ namespace FerryToHelsinki
             services.AddSignalR(options => options.EnableDetailedErrors = true);
             services.AddSingleton<MessageClient>();
             services.AddSingleton<AcceptMessagesSingleton>();
+            services.AddSingleton<GameStateSingleton>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

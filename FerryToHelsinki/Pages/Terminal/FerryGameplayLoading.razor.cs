@@ -19,7 +19,7 @@ namespace FerryToHelsinki.Pages.Terminal
                .WithUrl(NavigationManager.ToAbsoluteUri("/messagehub"))
                .Build();
 
-            _hubConnection.On<string>("StartGame", (messageContents) => StartGameAsync(messageContents));
+            _hubConnection.On<string>("StartGame", (messageContents) => StartGameAsync());
             await _hubConnection.StartAsync();
         }
 
@@ -33,14 +33,12 @@ namespace FerryToHelsinki.Pages.Terminal
             await base.OnAfterRenderAsync(firstRender);
         }
 
-        public async Task StartGameAsync(string messageContents)
+        public async Task StartGameAsync()
         {
             if (ShouldRenderForTerminalState)
             {
                 await UpdateTerminalState(Enums.TerminalStates.FerryToHelsinkiGameplay);
             }
-
-            Console.WriteLine(messageContents);
         }
 
         public async ValueTask DisposeAsync()
