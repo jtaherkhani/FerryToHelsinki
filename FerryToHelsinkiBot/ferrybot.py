@@ -53,11 +53,12 @@ class Ferrybot(object):
         message = newMessage[0]['message']
         fixedMesage = message[1:]
 
-        self.messageclient.post(newMessage[0]['username'], fixedMesage)
+        response = self.messageclient.post(newMessage[0]['username'], fixedMesage)
+
 
 
     def should_parse_message_contents(self, messageContents):
-        return messageContents[0] == '>' and self.messageclient.getMessageStatus() == 'True'
+        return messageContents[0] == '>' and self.messageclient.getMessageStatus() == 'true'
 
         
 
