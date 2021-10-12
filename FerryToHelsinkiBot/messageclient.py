@@ -6,6 +6,10 @@ class messageclient(object):
     def __init__(self):
         self.URL = "https://ferrytohelsinki.azurewebsites.net/api/Messages";
 
+    def getMessageStatus(self):
+        response = requests.get(self.URL)
+        return response.text
+
     def post(self, username, message):
         myjson = {'UserName': username, 'MessageContents': message}
         response = requests.post(self.URL, json=myjson)

@@ -57,8 +57,7 @@ class Ferrybot(object):
 
 
     def should_parse_message_contents(self, messageContents):
-        return messageContents[0] == '>'
-
+        return messageContents[0] == '>' and self.messageclient.getMessageStatus() == 'True'
 
         
 

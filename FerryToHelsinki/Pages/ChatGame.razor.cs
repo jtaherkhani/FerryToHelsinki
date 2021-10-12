@@ -1,4 +1,5 @@
-﻿using FerryToHelsinkiWebsite.Data.Models;
+﻿using FerryToHelsinki.Singleton;
+using FerryToHelsinkiWebsite.Data.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
 using System.Collections.Generic;
@@ -10,6 +11,9 @@ namespace FerryToHelsinki.Pages
     {
         [Inject]
         private NavigationManager NavigationManager { get; set; }
+
+        [Inject]
+        private AcceptMessagesSingleton AcceptMessagesSingleton { get; set; }
 
         private bool _gameStarted = false;
         private List<Message> _messages = new();
@@ -31,6 +35,7 @@ namespace FerryToHelsinki.Pages
         public async Task StartGameAsync()
         {
             _gameStarted = true;
+            AcceptMessagesSingleton.AcceptMessages = true;
             await _hubConnection.SendAsync("StartGame", "Game Has Started");
 
             StateHasChanged();
@@ -41,6 +46,7 @@ namespace FerryToHelsinki.Pages
             if (!string.IsNullOrWhiteSpace(newMessageContents))
             {
                 await _hubConnection.SendAsync("SendMessage", HostUserName, newMessageContents);
+                AcceptMessagesSingleton.AcceptMessages = true;
                 _messageContents = string.Empty;
             }
         }

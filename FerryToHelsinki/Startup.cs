@@ -1,5 +1,6 @@
 using FerryToHelsinki.Data;
 using FerryToHelsinki.Hubs;
+using FerryToHelsinki.Singleton;
 using FerryToHelsinkiWebsite.Data.Models;
 using FerryToHelsinkiWebsite.Data.Repositories;
 using Microsoft.AspNetCore.Builder;
@@ -25,14 +26,11 @@ namespace FerryToHelsinki
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<FerryToHelsinkiDBContext>(options => 
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("FerryToHelsinkiContext")));
             services.AddRazorPages();
             services.AddServerSideBlazor().AddCircuitOptions(option => { option.DetailedErrors = true; });
             services.AddSignalR(options => options.EnableDetailedErrors = true);
-            services.AddScoped<MessageRepository>();
-            services.AddScoped<MessageClient>();
+            services.AddSingleton<MessageClient>();
+            services.AddSingleton<AcceptMessagesSingleton>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
