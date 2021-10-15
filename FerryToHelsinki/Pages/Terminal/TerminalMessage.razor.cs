@@ -1,5 +1,8 @@
-﻿using FerryToHelsinki.Enums;
+﻿using FerryToHelsinki.Constants;
+using FerryToHelsinki.Enums;
+using FerryToHelsinki.Filing;
 using FerryToHelsinki.Services;
+using FerryToHelsinkiWebsite.Data.Constants;
 using FerryToHelsinkiWebsite.Data.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -17,6 +20,7 @@ namespace FerryToHelsinki.Pages.Terminal
         private NavigationManager NavigationManager { get; set; }
 
         private HubConnection _hubConnection;
+       
 
         public async ValueTask DisposeAsync()
         {
@@ -44,7 +48,26 @@ namespace FerryToHelsinki.Pages.Terminal
                 MessageContents = messageContents
             };
 
-            if (await JsRuntime.InvokeAsync<bool>("terminalFunctions.animateMessage", messageContents))
+            if (GameConstants.HostUserName == user && CurrentTerminalState == TerminalStates.FerryToHelsinkiGameplay)
+            {
+                await HandleHostUserMessage(message);
+            }
+            else
+            {
+                await HandlePlayerMessage(message);
+            }
+        }
+
+        private async Task HandleHostUserMessage(Message message)
+        {
+            await JsRuntime.InvokeVoidAsync("terminalFunctions.animateResponse", message.MessageContents, MessagePrefix);
+        }
+
+        private async Task HandlePlayerMessage(Message message)
+        {
+            var result = await JsRuntime.InvokeAsync<bool>("terminalFunctions.animateMessage", message.MessageContents);
+
+            if (result && CurrentTerminalState == TerminalStates.Opened)
             {
                 await MessageService.HandleMessageAsync(message);
 
@@ -54,5 +77,8 @@ namespace FerryToHelsinki.Pages.Terminal
                 }
             }
         }
+
+        private string MessagePrefix =>
+            CurrentTerminalState == TerminalStates.Opened ? MessageService.MessagePrompt : MessageConstants.MessagePrompt;
     }
 }

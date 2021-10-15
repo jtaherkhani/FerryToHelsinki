@@ -6,6 +6,15 @@ namespace FerryToHelsinkiWebsite.Data.Constants
 {
     public class AsciiArt
     {
+        public const string FerryTimeLineFrame1 =
+@"
+        _    _
+     __|_|__|_|__
+   _|____________|__
+  |o o o o o o o o /
+~'`~'`~'`~'`~'`~'`~'`~'`~'`~'`~'`~'`~'`~'`~'`~'`~'`~'`~'`~'`~'`~'`~'`~'`~'`~'`~'`~'`~'`~'`~'`~'`~'`~'`~'`~'`~";
+
+
         public const string FerryFrame1 =
 @"                         
            

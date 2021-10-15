@@ -1,5 +1,6 @@
 ﻿/*Set the body to work best with the terminal page we are creating */
 body,
+
 html {
     width: 100%;
     height: 100%;
@@ -127,6 +128,14 @@ body {
     order: 3;
 }
 
+#ferry-timeline-div {
+    order: 1;
+}
+
+#ferry-timeline-div {
+    order: 1;
+}
+
 #left-sidebar {
     transform: rotate(180deg);
 }
@@ -163,6 +172,24 @@ body {
     font-size: 1em;
     display: inline-flex;
     transform: rotateY(180deg);
+}
+
+#ferry-timeline {
+    color: #dc3545;
+    font-size: 1em;
+}
+
+#dramatic-countdown-div {
+    border: 5px solid #f8f9fa;
+    order: 2;
+    display: none;
+    margin-left: 47.5%;
+    padding: 5px;
+    color: #f8f9fa;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: Verdana, sans-serif, Arial;
+    text-decoration: none;
 }
 
 #ferry-subtitle {

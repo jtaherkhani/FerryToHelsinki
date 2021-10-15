@@ -1,5 +1,7 @@
 ﻿using FerryToHelsinki.Singleton;
+using FerryToHelsinkiWebsite.Data.Constants;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using System.Threading.Tasks;
 
 namespace FerryToHelsinki.Pages.Terminal
@@ -9,10 +11,13 @@ namespace FerryToHelsinki.Pages.Terminal
         [Inject]
         private GameStateSingleton GameStateSingleton { get; set; }
 
+        private string _startingFerryTerminalFrame = AsciiArt.FerryTimeLineFrame1;
+
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (ShouldRenderForTerminalState)
             {
+                await JsRuntime.InvokeVoidAsync("ferryGameplayFunctions.animateTimeline", _startingFerryTerminalFrame);
                 GameStateSingleton.GameStarted = true;
             }
 

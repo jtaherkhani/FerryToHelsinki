@@ -1,4 +1,5 @@
 ﻿using FerryToHelsinki.Singleton;
+using FerryToHelsinkiWebsite.Data.Constants;
 using FerryToHelsinkiWebsite.Data.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -20,7 +21,7 @@ namespace FerryToHelsinki.Pages
         private string _messageContents;
 
         private HubConnection _hubConnection;
-        private const string HostUserName = "TeriyakiSupreme";
+        private const string HostUserName = GameConstants.HostUserName;
 
         protected override async Task OnInitializedAsync()
         {

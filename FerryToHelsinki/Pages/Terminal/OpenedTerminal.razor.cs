@@ -14,7 +14,6 @@ namespace FerryToHelsinki.Pages.Terminal
         [Inject]
         private GameStateSingleton GameStateSingleton { get; set; }
 
-
         private bool IsRendered;
         
         protected override async Task OnAfterRenderAsync(bool firstRender)

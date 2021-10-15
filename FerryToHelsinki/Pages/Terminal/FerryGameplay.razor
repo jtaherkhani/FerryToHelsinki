@@ -2,8 +2,27 @@
 @using FerryToHelsinki.Shared.BaseComponents;
 @inherits TerminalStateComponent;
 
+
 @if (ShouldRenderForTerminalState)
 {
-    <h3>FerryGameplay</h3>
+    <div id="ferry-started">
+        <div id="left-sidebar">
+            <img id="sidebar" src="img/sidebanner.png" alt="left-sidebar">
+        </div>
+        <div id="ferry-detail">
+            <div id="ferry-timeline-div">
+                <pre id="ferry-timeline">@_startingFerryTerminalFrame</pre>
+            </div>
+            <div id="dramatic-countdown-div" />
+            <div id="gameplay">
+                <TerminalMessage CurrentTerminalState="Enums.TerminalStates.FerryToHelsinkiGameplay"
+                                 ExpectedTerminalState="Enums.TerminalStates.FerryToHelsinkiGameplay"
+                                 OnTerminalStateChanged="@UpdateTerminalState" />
+            </div>
+        </div>
+        <div id="right-sidebar">
+            <img id="sidebar" src="img/sidebanner.png" alt="right-sidebar">
+        </div>
+    </div>
 }
 

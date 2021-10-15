@@ -639,3 +639,79 @@ window.ferryLoadingFunctions = {
         }
     }
 }
+
+window.ferryGameplayFunctions = {
+    animateTimeline: function (ferryTimelineAscii) {
+        var ferryTimelineImage = document.getElementById('ferry-timeline');
+
+        var currentFerryTimelineAscii = ferryTimelineAscii;
+        var totalExecutions = 89 // based on characters on the screen
+        var executionToStartCountdown = 74
+        var currentExecutions = 0
+        var lowerDeckLength = 21
+        var midDeckLength = 21
+        var upperDeckLength = 18
+        var smokeStackLength = 15
+
+        var timelineInterval = setInterval(() => {
+            var boatPositionEnd = currentFerryTimelineAscii.length - 110 // current length for the water in the ascii drawing
+            var lowerDeckPositionStart = boatPositionEnd - lowerDeckLength 
+            var midDeckPositionStart = lowerDeckPositionStart - midDeckLength
+            var upperDeckPositionStart = midDeckPositionStart - upperDeckLength
+            var smokeStackPositionStart = upperDeckPositionStart - smokeStackLength
+            var asciiPriorToSmokeStackAdd = currentFerryTimelineAscii.slice(0, smokeStackPositionStart)
+            var asciiSmokeStack = currentFerryTimelineAscii.slice(smokeStackPositionStart, upperDeckPositionStart)
+            var asciiUpperDeck = currentFerryTimelineAscii.slice(upperDeckPositionStart, midDeckPositionStart)
+            var asciiMidDeck = currentFerryTimelineAscii.slice(midDeckPositionStart, lowerDeckPositionStart)
+            var asciiLowerDeck = currentFerryTimelineAscii.slice(lowerDeckPositionStart, boatPositionEnd)
+            var asciiWater = currentFerryTimelineAscii.slice(boatPositionEnd, currentFerryTimelineAscii.length) // take out the two characters from the end
+
+            asciiCharactersToAdd = " " 
+
+            currentFerryTimelineAscii = asciiPriorToSmokeStackAdd + asciiCharactersToAdd + asciiSmokeStack + asciiCharactersToAdd + asciiUpperDeck + asciiCharactersToAdd + asciiMidDeck + asciiCharactersToAdd + asciiLowerDeck + asciiWater
+            ferryTimelineImage.textContent = currentFerryTimelineAscii;
+
+            currentExecutions++
+            lowerDeckLength++
+            midDeckLength++
+            upperDeckLength++
+            smokeStackLength++
+
+            if (currentExecutions == executionToStartCountdown) {
+                setTimeout(countDown(), 1483) // based on the outer interval length
+            }
+
+            if (currentExecutions >= totalExecutions) {
+                clearInterval(timelineInterval)
+            }
+
+        }, 89*1000)
+
+        function countDown() {
+            var countdownMinutesLength = 10
+            var currentTime = Date.parse(new Date());
+            var deadline = new Date(currentTime + countdownMinutesLength * 60 * 1000);
+            var countdown = document.getElementById("dramatic-countdown-div");
+
+            var countdownId = setInterval(() => {
+                countdown.style.display = "inline-block";
+                var timeFromStart = Date.parse(deadline) - Date.parse(new Date()); // new date gets current date + time
+                var seconds = Math.floor((timeFromStart / 1000) % 60); // retrieves the current second that the time has dropped
+                var minutes = Math.floor((timeFromStart / 1000 / 60) % 60); // retrieves the current minute that the time has dropped
+
+                countdown.innerHTML = minutes + ':';
+
+                if (seconds < 10) {
+                    countdown.innerHTML += 0;
+                }
+
+                countdown.innerHTML += seconds;
+
+                if (timeFromStart <= 0) {
+                    clearInterval(countdownId)
+                }
+
+            }, 1000)
+        }
+    }
+}

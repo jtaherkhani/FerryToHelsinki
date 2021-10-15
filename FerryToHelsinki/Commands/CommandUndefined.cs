@@ -16,7 +16,7 @@ namespace FerryToHelsinki.Commands
             await _jsRuntime.InvokeVoidAsync("terminalFunctions.animateResponse", Message, MessagePrompt);
         }
 
-        private string Message =
+        private readonly string Message =
             "\n The value enter is not recognized as a Josh command, operable Josh program or a Josh idea. Type help for assistance\n";
     }
 }
