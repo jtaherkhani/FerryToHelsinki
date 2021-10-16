@@ -433,4 +433,7 @@ textarea {
     left: -20px;
 }
 
+.audio-tracks {
+    display: none;
+}
 

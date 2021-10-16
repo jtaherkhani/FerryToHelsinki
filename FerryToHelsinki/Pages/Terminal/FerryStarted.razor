@@ -6,28 +6,32 @@
 
 @if (ShouldRenderForTerminalState)
 {
-    <div id="ferry-started">
-        <div id="left-sidebar">
-            <img id="sidebar" src="img/sidebanner.png" alt="left-sidebar">
-        </div>
-        <div id="ferry-detail">
-            <div id="game-title-div">
-                <pre id="ferry-title">@Title</pre>
-            </div>
-            <div id="game-subtitle-div">
-                <div id="ferry-title-secondary">
-                    <pre id="ferry-image" />
-                    <pre id="ferry-subtitle">@SubTitle</pre>
-                    <pre id="ferry-image-inverted" />
-                </div>
-            </div>
-            <canvas id="ferry-game-selection">
-            </canvas>
-        </div>
-        <div id="right-sidebar">
-            <img id="sidebar" src="img/sidebanner.png" alt="right-sidebar">
-        </div>
+<div id="ferry-started">
+    <div id="left-sidebar">
+        <img id="sidebar" src="img/sidebanner.png" alt="left-sidebar">
     </div>
+    <div id="ferry-detail">
+        <div id="game-title-div">
+            <pre id="ferry-title">@Title</pre>
+        </div>
+        <div id="game-subtitle-div">
+            <div id="ferry-title-secondary">
+                <pre id="ferry-image" />
+                <pre id="ferry-subtitle">@SubTitle</pre>
+                <pre id="ferry-image-inverted" />
+            </div>
+        </div>
+        <canvas id="ferry-game-selection">
+        </canvas>
+    </div>
+    <div id="right-sidebar">
+        <img id="sidebar" src="img/sidebanner.png" alt="right-sidebar">
+    </div>
+</div>
+
+<audio class="audio-tracks" controls loop autoplay>
+    <source src="sounds/openingtheme.wav" type="audio/wav">
+</audio>
 }
 
 
