@@ -25,7 +25,8 @@ else
     <hr />
     <textarea class="input-lg" placeholder="enter message" @bind="@_messageContents" />
     <button type="button" class="btn btn-default" @onclick="@(() => SendFerryMessageAsync(_messageContents))">Send</button>
-    <InputFile OnChange="@LoadFilesAsync" multiple />
+    <InputFile OnChange="@(async (e) => await LoadFilesAsync(e))" />
+    <span id="upload-success">@IsFileUploaded</span>
 </div>
 }
 </div>

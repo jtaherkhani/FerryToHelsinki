@@ -87,6 +87,10 @@ namespace FerryToHelsinki.Pages
             var url = await BlobStorageService.UploadBrowserFileAsync(chatImgUpload);
 
             _messageUrl = url;
+            StateHasChanged();
         }
+
+        private string IsFileUploaded =>
+            (!string.IsNullOrWhiteSpace(_messageUrl)).ToString();
     }
 }

@@ -7,6 +7,7 @@ using FerryToHelsinkiWebsite.Data.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.JSInterop;
+using System;
 using System.Threading.Tasks;
 
 namespace FerryToHelsinki.Pages.Terminal
@@ -48,6 +49,11 @@ namespace FerryToHelsinki.Pages.Terminal
                 MessageContents = messageContents,
                 ImageUrl = imageUrl
             };
+
+            Console.WriteLine(user);
+            Console.WriteLine(messageContents);
+            Console.WriteLine(imageUrl);
+
 
             if (!string.IsNullOrWhiteSpace(message.ImageUrl))
             {

@@ -12,7 +12,7 @@ namespace FerryToHelsinki.Pages.Terminal
         private GameStateSingleton GameStateSingleton { get; set; }
 
         private string _startingFerryTerminalFrame = AsciiArt.FerryTimeLineFrame1;
-        
+        private string _helsinki = AsciiArt.Helsinki;
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {

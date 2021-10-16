@@ -29,7 +29,16 @@ namespace FerryToHelsinki.Services
             string fileName = Guid.NewGuid().ToString();
             var blockBlobClient = _blobContainerClient.GetBlockBlobClient(fileName);
 
-            await blockBlobClient.UploadAsync(browserFile.OpenReadStream());
+            var browserFileImgSize = await browserFile.RequestImageFileAsync("image/jpeg", 900, 900);
+            try
+            {
+                await blockBlobClient.UploadAsync(browserFileImgSize.OpenReadStream());
+            }
+            catch (Exception)
+            {
+                Console.WriteLine(browserFileImgSize.Size);
+                return string.Empty;
+            }
 
             return blockBlobClient.Uri.OriginalString;
         }

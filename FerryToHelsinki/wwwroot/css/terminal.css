@@ -171,8 +171,18 @@ body {
 }
 
 #ferry-timeline {
-    color: #dc3545;
-    font-size: 1em;
+    color: red;
+    display: inline-flex;
+    overflow-x: hidden;
+    font-weight: bold;
+    font-size: 65%;
+}
+
+#helsinki {
+    display: inline-flex;
+    color: mediumvioletred;
+    font-weight: bold;
+    font-size: 50%;
 }
 
 #dramatic-countdown-div {
