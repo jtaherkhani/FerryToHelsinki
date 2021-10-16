@@ -6,9 +6,9 @@ namespace FerryToHelsinki.Hubs
 {
     public class MessageHub : Hub<IMessageClient>
     {
-        public async Task SendMessage(string userName, string messageContents)
+        public async Task SendMessage(string userName, string messageContents, string imageUrl)
         {
-            await Clients.All.SendMessage(userName, messageContents);
+            await Clients.All.SendMessage(userName, messageContents, imageUrl);
         }
 
         public async Task StartGame(string startGameMessage)
@@ -31,7 +31,7 @@ namespace FerryToHelsinki.Hubs
 
     public interface IMessageClient
     {
-        Task SendMessage(string userName, string messageContents);
+        Task SendMessage(string userName, string messageContents, string imageUrl);
 
         Task StartGame(string startGameMessage);
     }

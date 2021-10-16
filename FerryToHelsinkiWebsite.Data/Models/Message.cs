@@ -9,5 +9,7 @@ namespace FerryToHelsinkiWebsite.Data.Models
 
         public string UserName { get; set; }
         public string MessageContents { get; set; }
+
+        public string ImageUrl { get; set; }
     }
 }

@@ -282,6 +282,12 @@ body {
     color: ghostwhite;
 }
 
+.gameplay-img {
+    max-width: 30%;
+    margin: auto;
+    display: flex
+}
+
 
 @keyframes blinking {
     0%, 100% {

@@ -36,8 +36,7 @@
             return true;
         });
     },
-
-    animateTextMessageAsync: function (messageContents, elementId, typingSpeed, isResponse, hostSentLastMessage) {
+    animateTextMessageAsync: async function (messageContents, elementId, typingSpeed, isResponse, hostSentLastMessage) {
         if (!messageContents) {
             return false;
         }
@@ -53,7 +52,7 @@
                     }
                 }
 
-                return document.createElement("SPAN");
+                return document.createElement("span");
             }
 
             function findLastResponse(messageSpan) { // should only be called when this is a known data state hostSentLastMessage = true
@@ -100,7 +99,17 @@
             }
 
         }, 160)
+    },
+    renderImage: function (imgUrl) {
+        var messageSpan = document.getElementById("message");
+        var newImage = document.createElement("img");
+
+        newImage.className = "gameplay-img";
+        newImage.src = imgUrl;
+
+        messageSpan.appendChild(newImage);
     }
+
 }
 
 window.ferryMainMenuFunctions = {

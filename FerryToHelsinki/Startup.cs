@@ -1,5 +1,7 @@
 using FerryToHelsinki.Data;
 using FerryToHelsinki.Hubs;
+using FerryToHelsinki.Models.AppConfig;
+using FerryToHelsinki.Services;
 using FerryToHelsinki.Singleton;
 using FerryToHelsinkiWebsite.Data.Models;
 using FerryToHelsinkiWebsite.Data.Repositories;
@@ -32,6 +34,8 @@ namespace FerryToHelsinki
             services.AddSingleton<MessageClient>();
             services.AddSingleton<AcceptMessagesSingleton>();
             services.AddSingleton<GameStateSingleton>();
+            services.AddSingleton(new BlobStorageConfiguration(Configuration));
+            services.AddSingleton<BlobStorageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

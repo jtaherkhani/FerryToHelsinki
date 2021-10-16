@@ -36,7 +36,7 @@ namespace FerryToHelsinki.Controllers
                 return BadRequest();
             }
 
-            await _messageHubContext.Clients.All.SendMessage(message.UserName, message.MessageContents);
+            await _messageHubContext.Clients.All.SendMessage(message.UserName, message.MessageContents, message.ImageUrl);
             _acceptMessagesSingleton.AcceptMessages = false;
             return Ok();
         }

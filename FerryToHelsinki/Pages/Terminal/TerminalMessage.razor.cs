@@ -36,17 +36,23 @@ namespace FerryToHelsinki.Pages.Terminal
                .WithUrl(NavigationManager.ToAbsoluteUri("/messagehub"))
                .Build();
 
-            _hubConnection.On<string, string>("SendMessage", (user, messageContents) => OnMessageReceivedAsync(user, messageContents));
+            _hubConnection.On<string, string, string>("SendMessage", (user, messageContents, imageUrl) => OnMessageReceivedAsync(user, messageContents, imageUrl));
             await _hubConnection.StartAsync();
         }
 
-        private async Task OnMessageReceivedAsync(string user, string messageContents)
+        private async Task OnMessageReceivedAsync(string user, string messageContents, string imageUrl)
         {
             var message = new Message
             {
                 UserName = user,
-                MessageContents = messageContents
+                MessageContents = messageContents,
+                ImageUrl = imageUrl
             };
+
+            if (!string.IsNullOrWhiteSpace(message.ImageUrl))
+            {
+                await HandleImageInMessage(message);
+            }
 
             if (GameConstants.HostUserName == user && CurrentTerminalState == TerminalStates.FerryToHelsinkiGameplay)
             {
@@ -58,6 +64,11 @@ namespace FerryToHelsinki.Pages.Terminal
                 await HandlePlayerMessage(message);
                 _hostSentLastMessage = false;
             }
+        }
+
+        private async Task HandleImageInMessage(Message message)
+        {
+            await JsRuntime.InvokeVoidAsync("terminalFunctions.renderImage", message.ImageUrl);
         }
 
         private async Task HandleHostUserMessage(Message message)

@@ -19,15 +19,6 @@ namespace FerryToHelsinki.Services
         public TerminalStates CurrentTerminalState {get; set;}
         public string MessagePrompt { get; }
 
-        /*
-        public MessageService(IJSRuntime jSRuntime, TerminalStates terminalState, string messagePrefix)
-        {
-            _eligibleCommands = Command.CreateCommandsDictionary(jSRuntime, terminalState, messagePrefix);
-            _undefinedCommand = new CommandUndefined(jSRuntime, terminalState, messagePrefix);
-            MessagePrefix = MessagePromptCharacter;
-        }
-        */
-
         public MessageService(FileSystem fileSystem, IJSRuntime jSRuntime)
         {
             MessagePrompt = fileSystem.GetCurrentDirectoryPath() + MessageConstants.MessagePrompt;

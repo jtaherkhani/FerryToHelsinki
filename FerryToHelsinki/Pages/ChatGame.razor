@@ -10,21 +10,22 @@
 }
 else
 {
-    <div id="top-pad">
-        <div id="scrollbox">
-            @foreach (var message in _messages)
-            {
-                var stringClass = message.UserName != HostUserName ? "received" : "sent";
+<div id="top-pad">
+    <div id="scrollbox">
+        @foreach (var message in _messages)
+        {
+            var stringClass = message.UserName != HostUserName ? "received" : "sent";
 
-                <div class="@stringClass">
-                    <div class="user">@message.UserName</div>
-                    <div class="msg">@message.MessageContents</div>
-                </div>
-            }
-        </div>
-        <hr />
-        <textarea class="input-lg" placeholder="enter message" @bind="@_messageContents" />
-        <button type="button" class="btn btn-default" @onclick="@(() => SendFerryMessageAsync(_messageContents))">Send</button>
+            <div class="@stringClass">
+                <div class="user">@message.UserName</div>
+                <div class="msg">@message.MessageContents</div>
+            </div>
+        }
     </div>
+    <hr />
+    <textarea class="input-lg" placeholder="enter message" @bind="@_messageContents" />
+    <button type="button" class="btn btn-default" @onclick="@(() => SendFerryMessageAsync(_messageContents))">Send</button>
+    <InputFile OnChange="@LoadFilesAsync" multiple />
+</div>
 }
 </div>
