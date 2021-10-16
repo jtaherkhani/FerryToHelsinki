@@ -202,6 +202,9 @@ body {
     overflow: hidden;
     width: 75%;
     margin: auto;
+    color: ghostwhite;
+    font-size: 1em;
+    font-family: monospace;
 }
 
 #ferry-subtitle {

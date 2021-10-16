@@ -12,6 +12,7 @@ namespace FerryToHelsinki.Pages.Terminal
         private GameStateSingleton GameStateSingleton { get; set; }
 
         private string _startingFerryTerminalFrame = AsciiArt.FerryTimeLineFrame1;
+        
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -23,5 +24,8 @@ namespace FerryToHelsinki.Pages.Terminal
 
             await base.OnAfterRenderAsync(firstRender);
         }
+
+        private string FirstMessage =>
+            "You find yourself sitting at a desk in a decently sized office. \n There is a small pamphlet on the desk in front of you saying \" Wecome to the Ferry...\". \n A door greets you to the right, along with more desks in front and behind you. What do you do?";
     }
 }
