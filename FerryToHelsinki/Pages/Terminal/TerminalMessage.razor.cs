@@ -20,7 +20,7 @@ namespace FerryToHelsinki.Pages.Terminal
         private NavigationManager NavigationManager { get; set; }
 
         private HubConnection _hubConnection;
-       
+        private bool _hostSentLastMessage;
 
         public async ValueTask DisposeAsync()
         {
@@ -51,21 +51,23 @@ namespace FerryToHelsinki.Pages.Terminal
             if (GameConstants.HostUserName == user && CurrentTerminalState == TerminalStates.FerryToHelsinkiGameplay)
             {
                 await HandleHostUserMessage(message);
+                _hostSentLastMessage = true;
             }
             else
             {
                 await HandlePlayerMessage(message);
+                _hostSentLastMessage = false;
             }
         }
 
         private async Task HandleHostUserMessage(Message message)
         {
-            await JsRuntime.InvokeVoidAsync("terminalFunctions.animateResponse", message.MessageContents, MessagePrefix);
+            await JsRuntime.InvokeVoidAsync("terminalFunctions.animateResponse", message.MessageContents, MessagePrefix, _hostSentLastMessage);
         }
 
         private async Task HandlePlayerMessage(Message message)
         {
-            var result = await JsRuntime.InvokeAsync<bool>("terminalFunctions.animateMessage", message.MessageContents);
+            var result = await JsRuntime.InvokeAsync<bool>("terminalFunctions.animateMessage", message.MessageContents, _hostSentLastMessage);
 
             if (result && CurrentTerminalState == TerminalStates.Opened)
             {

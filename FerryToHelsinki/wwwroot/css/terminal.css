@@ -132,10 +132,6 @@ body {
     order: 1;
 }
 
-#ferry-timeline-div {
-    order: 1;
-}
-
 #left-sidebar {
     transform: rotate(180deg);
 }
@@ -190,6 +186,22 @@ body {
     font-weight: bold;
     font-family: Verdana, sans-serif, Arial;
     text-decoration: none;
+}
+
+#ferry-gameplay {
+    overflow: hidden;
+    height: 100%;
+}
+
+#gameplay {
+    order: 3;
+    display: flex;
+    flex-direction: column-reverse;
+    height: initial;
+    max-height: 77%;
+    overflow: hidden;
+    width: 75%;
+    margin: auto;
 }
 
 #ferry-subtitle {
@@ -251,7 +263,7 @@ body {
 #message {
     position: relative;
     width: max-content; /* Not supported in IE or EDGE*/
-    white-space: pre;
+    white-space: pre-wrap;
 }
 
     #message::after {
@@ -263,6 +275,9 @@ body {
         animation: blinking 1s step-end infinite;
     }
 
+.response {
+    color: ghostwhite;
+}
 
 
 @keyframes blinking {

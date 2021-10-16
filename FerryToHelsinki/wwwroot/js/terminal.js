@@ -1,19 +1,22 @@
 ﻿window.terminalFunctions = {
     animateTerminalOpened: async function (...messageElements) {
         for (i = 0; i < messageElements.length; i++) {
-            await this.animateTextAsync(messageElements[i][0], messageElements[i][1], 1);
+            await this.animateTextTitleAsync(messageElements[i][0], messageElements[i][1], 1);
         }
         return true; // denotes when the terminal has rendered everything required
     },
-    animateMessage: async function (messageContents) {
-        await this.animateTextAsync(messageContents, "message", 200);
+    animateMessage: async function (messageContents, hostSentLastMessage) {
+        await this.animateTextMessageAsync(messageContents, "message", 200, false, hostSentLastMessage);
         return true;
     },
-    animateResponse: async function (responseContents, messagePrefix) {
-        await this.animateTextAsync('\n' + responseContents, "message", 1);
-        await this.animateTextAsync('\n' + messagePrefix, "message", 1);
+    animateResponse: async function (responseContents, messagePrefix, hostSentLastMessage) {
+        await this.animateTextMessageAsync('\n' + responseContents, "message", 1, true, hostSentLastMessage);
+
+        if (!hostSentLastMessage) {
+            await this.animateTextMessageAsync('\n\n' + messagePrefix, "message", 1, false, hostSentLastMessage);
+        }
     },
-    animateTextAsync: function (messageContents, elementId, typingSpeed) {
+    animateTextTitleAsync: function (messageContents, elementId, typingSpeed) {
         if (!messageContents) {
             return false;
         }
@@ -22,6 +25,56 @@
             let charCount = 0;
             charInterval = setInterval(() => {
                 messageSpan.textContent += messageContents[charCount];
+                charCount++;
+
+                if (charCount >= messageContents.length) {
+                    clearInterval(charInterval);
+                    resolve();
+                }
+            }, typingSpeed)
+        }).then(() => {
+            return true;
+        });
+    },
+
+    animateTextMessageAsync: function (messageContents, elementId, typingSpeed, isResponse, hostSentLastMessage) {
+        if (!messageContents) {
+            return false;
+        }
+        return new Promise(resolve => {
+            var messageSpan = document.getElementById(elementId);
+            let charCount = 0;
+
+            function findOrCreateSpan(messageSpan) {
+                if (messageSpan.childNodes.length > 0) {
+                    var lastChild = messageSpan.childNodes[messageSpan.childNodes.length - 1];
+                    if (lastChild.className == 'request' && !isResponse) {
+                        return lastChild;
+                    }
+                }
+
+                return document.createElement("SPAN");
+            }
+
+            function findLastResponse(messageSpan) { // should only be called when this is a known data state hostSentLastMessage = true
+                return messageSpan.childNodes[messageSpan.childNodes.length - 2];
+            }
+
+            var requestOrResponseSpan = (hostSentLastMessage && isResponse) ? findLastResponse(messageSpan) : findOrCreateSpan(messageSpan);
+
+            if (isResponse) {
+                requestOrResponseSpan.className = 'response'
+            }
+            else {
+                requestOrResponseSpan.className = 'request'
+            }
+
+            if (!hostSentLastMessage || !isResponse) {
+                messageSpan.appendChild(requestOrResponseSpan);
+            }
+
+            charInterval = setInterval(() => {
+                requestOrResponseSpan.textContent += messageContents[charCount];
                 charCount++;
 
                 if (charCount >= messageContents.length) {
