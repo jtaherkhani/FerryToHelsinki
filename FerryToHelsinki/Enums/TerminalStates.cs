@@ -10,6 +10,7 @@ namespace FerryToHelsinki.Enums
         Opened,
         FerryToHelsinkiStart,
         FerryToHelsinkiLoading,
-        FerryToHelsinkiGameplay
+        FerryToHelsinkiGameplay,
+        FerryToHelsinkiEndCredits
     }
 }

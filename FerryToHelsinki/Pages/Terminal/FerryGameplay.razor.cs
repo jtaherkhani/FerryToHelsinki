@@ -11,18 +11,25 @@ namespace FerryToHelsinki.Pages.Terminal
         [Inject]
         private GameStateSingleton GameStateSingleton { get; set; }
 
-        private string _startingFerryTerminalFrame = AsciiArt.FerryTimeLineFrame1;
-        private string _helsinki = AsciiArt.Helsinki;
+        private readonly string _startingFerryTerminalFrame = AsciiArt.FerryTimeLineFrame1;
+        private readonly string _helsinki = AsciiArt.Helsinki;
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (ShouldRenderForTerminalState)
             {
-                await JsRuntime.InvokeVoidAsync("ferryGameplayFunctions.animateTimeline", _startingFerryTerminalFrame);
+                var ferryGameplayReference = DotNetObjectReference.Create(this);
+                await JsRuntime.InvokeVoidAsync("ferryGameplayFunctions.animateTimeline", _startingFerryTerminalFrame, ferryGameplayReference);
                 GameStateSingleton.GameStarted = true;
             }
 
             await base.OnAfterRenderAsync(firstRender);
+        }
+
+        [JSInvokable]
+        public async Task EndGameAsync()
+        {
+            await UpdateTerminalState(Enums.TerminalStates.FerryToHelsinkiEndCredits);
         }
 
         private string FirstMessage =>

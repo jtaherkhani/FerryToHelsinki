@@ -144,7 +144,7 @@ body {
 
 #right-sidebar {}
 
-#ferry-title {
+.ferry-title {
     color: #0080ff;
     font-size: 1.25em;
     margin: auto;
@@ -217,9 +217,10 @@ body {
     font-family: monospace;
 }
 
-#ferry-subtitle {
+.ferry-subtitle {
     color: #dc3545;
     display: inline-flex;
+    font-size: 50%
 }
 
 #ferry-game-selection {
@@ -271,6 +272,113 @@ body {
     font-family: monospace;
     text-decoration: none;
 }
+
+#credits {
+    text-align: center;
+    text-transform: uppercase;
+    color: ghostwhite;
+    animation: 120s credits linear forwards;
+    top: 150%;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+#game-title-credits {
+    padding-bottom: 70px;
+}
+
+#scroll-size {
+    width: 80%;
+    margin: auto;
+}
+
+.single-credits {
+    display: grid;
+    text-align: center;
+    text-transform: none;
+    padding-bottom: 70px;
+}
+
+.single-credits-dt {
+    font-variant-caps: all-small-caps;
+    margin-top: 10px;
+    font-size: 110%
+}
+
+.single-credits-dd {
+    margin-top: 1px;
+    font-size: 130%
+}
+
+.double-credits-dl {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0 2rem;
+    padding-bottom: 70px;
+}
+
+.double-credits-dt {
+    text-align: right;
+    font-variant-caps: all-small-caps;
+    margin-top: 1.2rem;
+    font-size: 120%;
+}
+
+.double-credits-dd {
+    text-align: left;
+    grid-column: 2 / 3;
+    margin-top: 1.2rem;
+    font-size: 120%;
+}
+
+.inline-music {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10px;
+    text-transform: none;
+    padding-bottom: 70px;
+}
+
+.inline-music-dl {
+    text-align: center;
+    padding: 0 2rem 2rem 2rem;
+    flex-basis: 20rem;
+}
+
+.inline-music-dt {
+    font-style: italic;
+    margin-bottom: .5rem;
+    font-size: 150%
+}
+
+.inline-music-dd {
+    font-size: 110%;
+}
+
+.inline-thanks {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-bottom: 70px;
+}
+
+.inline-list {
+    padding: .3rem .8rem;
+}
+
+.inline-list-break {
+    padding: .3rem .8rem;
+}
+
+.inline-list-break:after {
+    content: "\a";
+    white-space: pre;
+}
+
 
 /* message typing take from https://blog.carbonfive.com/vintage-terminal-effect-in-css3 */
 #message {
@@ -360,6 +468,17 @@ body {
     }
 }
 
+
+@keyframes credits {
+    0% {
+        top: 150%;
+    }
+
+    100% {
+        top: -236%
+    }
+}
+
 /* Rules for chat window instead of terminal directly */
 .appContainer {
     background-color: white;
@@ -436,4 +555,5 @@ textarea {
 .audio-tracks {
     display: none;
 }
+
 

@@ -1,0 +1,112 @@
+﻿@layout FerryToHelsinki.Shared.Layouts.Terminal
+@using FerryToHelsinki.Shared.BaseComponents;
+@inherits TerminalStateComponent;
+
+@if (ShouldRenderForTerminalState)
+{
+    <div id="credits">
+        <div id="scroll-size">
+            <div id="game-title-credits">
+                <pre class="ferry-title">@Title</pre>
+                <pre class="ferry-subtitle">@SubTitle</pre>
+            </div>
+
+            <div class="single-credits">
+                <dl class="single-credits-dl">
+                    <dt class="single-credits-dt">Creative Director</dt>
+                    <dd class="single-credits-dd">SVEN JORGESSON</dd>
+                    <dt class="single-credits-dt">Lead Programmer</dt>
+                    <dd class="single-credits-dd">WOULD PREFER NOT TO SAY JORGESSON</dd>
+                    <dt class="single-credits-dt">Game produced for use in</dt>
+                    <dd class="single-credits-dd">Check-Please-a-Palooza 2021</dd>
+                </dl>
+            </div>
+
+            <h2>- Quality Assurance -</h2>
+            <div class="single-credits">
+                <dl class="single-credits-dl">
+                    <dt class="single-credits-dt">Garry B</dt>
+                    <dt class="single-credits-dt">Toylah</dt>
+                    <dt class="single-credits-dt">Chunderfins</dt>
+                    <dt class="single-credits-dt">Flashcry Samurai(For the clutch OBS VIDS)</dt>
+                </dl>
+            </div>
+
+            <h2>- Art -</h2>
+            <div class="double-credits">
+                <dl class="double-credits-dl">
+                    <dt class="double-credits-dt">ascii master</dt>
+                    <dd class="double-credits-dd">Drew Noakes</dd>
+                    <dt class="double-credits-dt">Fonts</dt>
+                    <dd class="double-credits-dd">Code Man 38</dd>
+                    <dt class="double-credits-dt">Ascii Boats</dt>
+                    <dd class="double-credits-dd">Hayley Jane Wakensaw</dd>
+                </dl>
+            </div>
+
+            <h2>- Localization -</h2>
+            <div class="double-credits">
+                <dl class="double-credits-dl">
+                    <dt class="double-credits-dt">finnish</dt>
+                    <dd class="double-credits-dd">SOME GUY NAMED GREG (BUT NOT PRONOUNCED THE WAY YOU'D THINK)</dd>
+                </dl>
+            </div>
+
+            <h2>- Music -</h2>
+            <div class="inline-music">
+                <dl class="inline-music-dl">
+                    <dt class="inline-music-dt">Welcome Aboard</dt>
+                    <dd class="inline-music-dd"><em>Composed by</em> Turn Three</dd>
+                    <dd class="inline-music-dd"><em>Performed by</em> Turn Three</dd>
+                </dl>
+                <dl class="inline-music-dl">
+                    <dt class="inline-music-dt">HELLsinki</dt>
+                    <dd class="inline-music-dd"><em>Composed by</em> AT Chunderfins</dd>
+                    <dd class="inline-music-dd"><em>Performed by</em> AT Chunderfins</dd>
+                </dl>
+                <dl class="inline-music-dl">
+                    <dt class="inline-music-dt">Tark Patrol</dt>
+                    <dd class="inline-music-dd"><em>Composed by</em> Zbarf</dd>
+                    <dd class="inline-music-dd"><em>Performed by</em> Zbarf</dd>
+                </dl>
+            </div>
+
+            <h2>- Built Using -</h2>
+            <ul class="inline-thanks">
+                <li class="inline-list">Python</li>
+                <li class="inline-list">Javascript</li>
+                <li class="inline-list">C# (Blazor + ASP.NET)</li>
+                <li class="inline-list-break">CSS</li>
+                <li class="inline-list-break">HTML</li>
+                <li class="inline-list">AZURE</li>
+            </ul>
+
+            <h2>- Special Thanks -</h2>
+            <ul class="inline-thanks">
+                <li class="inline-list">Tyler Seitz</li>
+                <li class="inline-list">Rudy Jachan</li>
+                <li class="inline-list">Anders Evenrud</li>
+                <li class="inline-list-break">Jakub T. Jankiewicz</li>
+                <li class="inline-list-break">S.R. Wild</li>
+                <li class="inline-list">And every stack overflow article along the way...</li>
+            </ul>
+
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <h1>THANKS FOR PLAYING!</h1>
+        </div>
+    </div>
+    <audio class="audio-tracks" controls autoplay>
+        <source src="sounds/tarkpatrol.wav" type="audio/wav">
+    </audio>
+}

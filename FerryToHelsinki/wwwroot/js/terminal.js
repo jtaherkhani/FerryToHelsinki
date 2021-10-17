@@ -703,8 +703,9 @@ window.ferryLoadingFunctions = {
 }
 
 window.ferryGameplayFunctions = {
-    animateTimeline: function (ferryTimelineAscii) {
+    animateTimeline: function (ferryTimelineAscii, ferryGameplayReference) {
         var ferryTimelineImage = document.getElementById('ferry-timeline');
+        var ferryGameplayCallback = ferryGameplayReference;
 
         var currentFerryTimelineAscii = ferryTimelineAscii;
         var totalExecutions = 89 // based on characters on the screen
@@ -746,7 +747,6 @@ window.ferryGameplayFunctions = {
             if (currentExecutions >= totalExecutions) {
                 clearInterval(timelineInterval)
             }
-
         }, 89*1000)
 
         function countDown() {
@@ -771,9 +771,13 @@ window.ferryGameplayFunctions = {
 
                 if (timeFromStart <= 0) {
                     clearInterval(countdownId)
+                    endGame()
                 }
-
             }, 1000)
+        }
+
+        function endGame() {
+            ferryGameplayCallback.invokeMethodAsync("EndGameAsync");
         }
     }
 }

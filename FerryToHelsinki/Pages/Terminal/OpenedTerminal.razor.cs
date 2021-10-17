@@ -18,7 +18,7 @@ namespace FerryToHelsinki.Pages.Terminal
         
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (firstRender)
+            if (ShouldRenderForTerminalState && firstRender)
             {
                 MessageService = new MessageService(new FileSystem(), JsRuntime);
                 IsRendered = await JsRuntime.InvokeAsync<bool>("terminalFunctions.animateTerminalOpened", TitleContents);

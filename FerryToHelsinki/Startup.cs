@@ -35,6 +35,7 @@ namespace FerryToHelsinki
             services.AddSingleton<AcceptMessagesSingleton>();
             services.AddSingleton<GameStateSingleton>();
             services.AddSingleton(new BlobStorageConfiguration(Configuration));
+            services.AddSingleton(new FerryStartStateConfiguration(Configuration));
             services.AddSingleton<BlobStorageService>();
         }
 
